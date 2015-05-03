@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5A482D12-1CF1-4BC9-ADFE-8D63E1E69D99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Communication.Infrastructure</RootNamespace>
+    <AssemblyName>Communication.Infrastructure</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MessageProcessor\IBaseMessageProcessor.cs" />
+    <Compile Include="MessageProcessor\IArduinoMessageProcessor.cs" />
+    <Compile Include="Messages\ArduinoMessage.cs" />
+    <Compile Include="Enums\PackTypes.cs" />
+    <Compile Include="Enums\MessageType.cs" />
+    <Compile Include="Util\EnumConverter.cs" />
+    <Compile Include="Services\IUDPClientService.cs" />
+    <Compile Include="Services\IUDPService.cs" />
+    <Compile Include="Services\EventArgs\DataEventArgs.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MessageProcessor\" />
+    <Folder Include="Messages\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Util\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\EventArgs\" />
+  </ItemGroup>
+</Project>
