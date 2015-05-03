@@ -45,7 +45,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
- //ProcessSteering();
+ ProcessSteering();
   /*
   pinMode(_steeringBoard.EndStopLeft,INPUT);
   pinMode(_steeringBoard.EndStopRight,INPUT);*/
@@ -176,6 +176,7 @@ void SteeringSetup()
         analogWrite(_steeringBoard.PowerPin,_state.SetupSpeed);
         _state.RealPosition = encoderMotor.read();
     }
+    encoderSteering.write(encoderMotor.read());
     Serial.print("MaxRange ist.");
     Serial.print(_state.MaxRange);
     Serial.print(" Center ist:");

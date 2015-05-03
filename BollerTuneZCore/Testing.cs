@@ -25,15 +25,6 @@ namespace BollerTuneZCore
 			message.TypeByte = 0x02;
 			message.Payload = new byte[]{0x1F};
 			_udpClientService.SendMessage (host, port, message);
-
-			for (int i = 0; i < 100; i++) {
-				Thread.Sleep (500);
-				message = new ArduinoMessage ();
-				message.LengthByte = 0x01;
-				message.TypeByte = EnumConverter.MessageTypeToType (MessageType.Steering_position);
-				message.Payload = new byte[]{Convert.ToByte(i)};
-				_udpClientService.SendMessage (host, port, message);
-			}
 		}
 	}
 }
