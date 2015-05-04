@@ -55,7 +55,7 @@ namespace JoystickApi
 		void ProcessAxis(JoyStickEventArgs args)
 		{
 			if (args.Key == 1) {
-				int mappedValue = Map ((int)args.Value, Low, High, 0, 255);
+				int mappedValue = (int)map (args.Value, Low, High, 0, 255);
 				if (mappedValue != PowerPosition) {
 					OnPowerChanged (this, new SoftControlEventArgs () {
 						Value = mappedValue,
@@ -63,7 +63,7 @@ namespace JoystickApi
 				}
 				PowerPosition = mappedValue;
 			} else if (args.Key == 3) {
-				int mappedValue = Map ((int)args.Value, Low, High, 0, 255);
+				int mappedValue = (int)map (args.Value, Low, High, 0, 255);
 				if (mappedValue != SteeringPosition) {
 					OnSteeringChanged (this, new SoftControlEventArgs () {
 						Value = mappedValue,
@@ -90,6 +90,11 @@ namespace JoystickApi
 			return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
 		}
 
+		private uint map(int x, int in_min, int in_max, int out_min, int out_max)
+		{
+			int Puls = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+			return (uint)Puls;
+		}
 	}
 }
 
