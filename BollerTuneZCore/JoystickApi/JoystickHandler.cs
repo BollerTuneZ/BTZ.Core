@@ -2,7 +2,6 @@
 using Infrastructure;
 using System.Collections.Generic;
 using System.IO;
-using log4net;
 using System.Threading;
 
 namespace JoystickApi
@@ -10,7 +9,6 @@ namespace JoystickApi
 	public class JoyStickHandler : IJoyStickHandler
 	{
 		const string DeviceFile = "/dev/input/js0";
-		readonly static ILog s_log = LogManager.GetLogger (typeof(JoyStickHandler));
 		public volatile bool KeepRunning = true;
 		Thread _joyStickServiceThread;
 		public JoyStickHandler ()
@@ -26,9 +24,6 @@ namespace JoystickApi
 
 			if (!File.Exists(DeviceFile))
 			{
-				s_log.Error (String.Format (
-					"Could not find Joystick Controller {0}",
-					DeviceFile));
 				return;
 			}
 
