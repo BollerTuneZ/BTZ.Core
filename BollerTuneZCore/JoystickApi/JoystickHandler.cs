@@ -41,6 +41,12 @@ namespace JoystickApi
 
 		void JoyStickService()
 		{
+			if (!File.Exists(DeviceFile))
+			{
+				Console.WriteLine ("File is missing");
+				return;
+			}
+
 			using (FileStream fs = new FileStream(DeviceFile, FileMode.Open))
 			{
 				byte[] buff = new byte [8];
