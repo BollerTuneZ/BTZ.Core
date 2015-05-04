@@ -55,7 +55,7 @@ namespace JoystickApi
 		void ProcessAxis(JoyStickEventArgs args)
 		{
 			if (args.Key == 1) {
-				int mappedValue = (int)map (args.Value, Low, High, 0, 255);
+				int mappedValue = (int)map (args.Value, Low, High, -255, 255);
 				if (mappedValue != PowerPosition) {
 					OnPowerChanged (this, new SoftControlEventArgs () {
 						Value = mappedValue,
