@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationLib", "SerializationLib\SerializationLib.csproj", "{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoystickApi", "JoystickApi\JoystickApi.csproj", "{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{9FB644CF-248A-4D80-A499-920548E3ABC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,6 +29,14 @@ Global
 		{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}.Debug|x86.Build.0 = Debug|Any CPU
 		{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}.Release|x86.ActiveCfg = Release|Any CPU
 		{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}.Release|x86.Build.0 = Release|Any CPU
+		{9FB644CF-248A-4D80-A499-920548E3ABC3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9FB644CF-248A-4D80-A499-920548E3ABC3}.Debug|x86.Build.0 = Debug|Any CPU
+		{9FB644CF-248A-4D80-A499-920548E3ABC3}.Release|x86.ActiveCfg = Release|Any CPU
+		{9FB644CF-248A-4D80-A499-920548E3ABC3}.Release|x86.Build.0 = Release|Any CPU
+		{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}.Debug|x86.Build.0 = Debug|Any CPU
+		{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}.Release|x86.Build.0 = Release|Any CPU
 		{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}.Debug|x86.Build.0 = Debug|Any CPU
 		{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}.Release|x86.ActiveCfg = Release|Any CPU

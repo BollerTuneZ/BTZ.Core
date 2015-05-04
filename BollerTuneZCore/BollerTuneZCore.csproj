@@ -57,5 +57,13 @@
       <Project>{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}</Project>
       <Name>SerializationLib</Name>
     </ProjectReference>
+    <ProjectReference Include="Testing\Testing.csproj">
+      <Project>{9FB644CF-248A-4D80-A499-920548E3ABC3}</Project>
+      <Name>Testing</Name>
+    </ProjectReference>
+    <ProjectReference Include="JoystickApi\JoystickApi.csproj">
+      <Project>{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}</Project>
+      <Name>JoystickApi</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

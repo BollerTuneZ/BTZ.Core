@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}</ProjectGuid>
+    <ProjectGuid>{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Infrastructure</RootNamespace>
-    <AssemblyName>Infrastructure</AssemblyName>
+    <RootNamespace>JoystickApi</RootNamespace>
+    <AssemblyName>JoystickApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,26 +29,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TinyIoC.cs" />
-    <Compile Include="Serialization\IJsonHelper.cs" />
-    <Compile Include="JoystickApi\IJoyStickHandler.cs" />
-    <Compile Include="JoystickApi\Buttons\Buttons.cs" />
-    <Compile Include="JoystickApi\JoyStickEventArgs\JoyStickEventArgs.cs" />
-    <Compile Include="JoystickApi\IBTZJoyStickController.cs" />
-    <Compile Include="JoystickApi\JoyStickEventArgs\SoftControlEventArgs.cs" />
-    <Compile Include="JoystickApi\JoyStickEventArgs\SpecialButtonEventArgs.cs" />
+    <Compile Include="JoystickHandler.cs" />
+    <Compile Include="BTZJoyStickController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Serialization\" />
-    <Folder Include="JoystickApi\" />
-    <Folder Include="JoystickApi\Buttons\" />
-    <Folder Include="JoystickApi\JoyStickEventArgs\" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
