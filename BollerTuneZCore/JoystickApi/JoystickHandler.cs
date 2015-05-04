@@ -26,8 +26,6 @@ namespace JoystickApi
 			{
 				return;
 			}
-
-			throw new NotImplementedException ();
 		}
 
 		public void Run ()
