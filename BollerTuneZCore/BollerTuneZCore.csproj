@@ -31,6 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="log4net">
+      <HintPath>Lib\log4net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -38,6 +41,8 @@
     <Compile Include="Testing.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Processors\SteeringProcessor.cs" />
+    <Compile Include="Config\NetworkConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,5 +70,9 @@
       <Project>{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}</Project>
       <Name>JoystickApi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Processors\" />
+    <Folder Include="Config\" />
   </ItemGroup>
 </Project>

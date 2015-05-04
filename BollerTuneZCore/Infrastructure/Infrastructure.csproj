@@ -40,6 +40,8 @@
     <Compile Include="JoystickApi\IBTZJoyStickController.cs" />
     <Compile Include="JoystickApi\JoyStickEventArgs\SoftControlEventArgs.cs" />
     <Compile Include="JoystickApi\JoyStickEventArgs\SpecialButtonEventArgs.cs" />
+    <Compile Include="Config\INetworkConfig.cs" />
+    <Compile Include="Config\Network\ConnectionInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -50,5 +52,7 @@
     <Folder Include="JoystickApi\" />
     <Folder Include="JoystickApi\Buttons\" />
     <Folder Include="JoystickApi\JoyStickEventArgs\" />
+    <Folder Include="Config\" />
+    <Folder Include="Config\Network\" />
   </ItemGroup>
 </Project>

@@ -83,6 +83,15 @@ void EthernetSetup()
       {
           Serial.println("Starte SteeringProcess");
           keepRunning = 0;
+      }if(incommingMessage->Type == 0x03)
+      {
+          SteeringSetup();
+      }if(incommingMessage->Type == 0x04)
+      {
+          _state.Enabled = 1;
+      }if(incommingMessage->Type == 0x05)
+      {
+          _state.Enabled = 0;
       }
     }
   }
@@ -164,6 +173,7 @@ void SteeringSetup()
     /*Zum Rechten Endtaster fahren und Position auf null setzen*/
     while(ReadEndStops()[1] == _state.EndStopPullUp)
     {
+        Serial.println("Move to Right corner");
         SetDirection('R');
         analogWrite(_steeringBoard.PowerPin,_state.SetupSpeed);
     }
@@ -172,6 +182,7 @@ void SteeringSetup()
     
     while(ReadEndStops()[0] == _state.EndStopPullUp)
     {
+        Serial.println("Move to Left corner");
         SetDirection('L');
         analogWrite(_steeringBoard.PowerPin,_state.SetupSpeed);
         _state.RealPosition = encoderMotor.read();

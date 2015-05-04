@@ -41,6 +41,7 @@
     <Compile Include="Services\IUDPClientService.cs" />
     <Compile Include="Services\IUDPService.cs" />
     <Compile Include="Services\EventArgs\DataEventArgs.cs" />
+    <Compile Include="MessageProcessor\ISteeringProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
