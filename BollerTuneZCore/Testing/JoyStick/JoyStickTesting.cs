@@ -17,6 +17,7 @@ namespace Testing
 		public void Run()
 		{
 			_btzJoyStickController.Initialize ();
+			_btzJoyStickController.Run ();
 		}
 
 		void OnSteeringHasChanged (object sender, EventArgs e)
