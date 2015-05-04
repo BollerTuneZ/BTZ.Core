@@ -10,13 +10,23 @@ MessageGenerator::~MessageGenerator()
 {
   
 }
-    
+Message* MessageGenerator::CreateSteeringStartMessage()
+{
+    StartSteering = new Message();
+    StartSteering->StartByte = Startbyte;
+    StartSteering->EndByte = Endbyte;
+    StartSteering->Type = _common.StartSteering;
+    fillByte = new char(0x01);
+    StartSteering->Data = fillByte;
+    StartSteering->Length = 1;
+    return StartSteering;
+}
 Message* MessageGenerator::CreateReadPositionMessage(int Position)
 {
     ReadPosition = new Message();
     ReadPosition->StartByte = Startbyte;
     ReadPosition->EndByte = Endbyte;
-    ReadPosition->Type = ReadPositionType;
+    ReadPosition->Type = _common.ReadPositionType;
     steeringPosition = new char[5];
     String str;
     str=String(Position);
@@ -25,15 +35,12 @@ Message* MessageGenerator::CreateReadPositionMessage(int Position)
     ReadPosition->Length = 5;
     return ReadPosition;
 }
-
-
-
 Message* MessageGenerator::CreateEngineSpeedMessage(int engineSpeed)
 {
     EngineSpeed = new Message();
     EngineSpeed->StartByte = Startbyte;
     EngineSpeed->EndByte = Endbyte;
-    EngineSpeed->Type = Engine_ReadSpeed;
+    EngineSpeed->Type = _common.Engine_ReadSpeed;
     m_engineSpeed = new char[5];
     String str;
     str=String(engineSpeed);
@@ -47,7 +54,7 @@ Message* MessageGenerator::CreateEngineDirectionMessage(int engineDirection)
     EnigneDirection = new Message();
     EnigneDirection->StartByte = Startbyte;
     EnigneDirection->EndByte = Endbyte;
-    EnigneDirection->Type = Engine_ReadDirection;
+    EnigneDirection->Type = _common.Engine_ReadDirection;
     m_engineDirection = new char(0x01);
     
     if(engineDirection == 1)

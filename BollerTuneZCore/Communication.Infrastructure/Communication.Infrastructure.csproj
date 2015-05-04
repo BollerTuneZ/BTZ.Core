@@ -42,6 +42,7 @@
     <Compile Include="Services\IUDPService.cs" />
     <Compile Include="Services\EventArgs\DataEventArgs.cs" />
     <Compile Include="MessageProcessor\ISteeringProcessor.cs" />
+    <Compile Include="MessageProcessor\IMessagePacker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

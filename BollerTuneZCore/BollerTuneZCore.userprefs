@@ -1,1 +1,20 @@
-﻿<Properties StartupItem="BollerTuneZCore.csproj" GitUserInfo="UsingGIT" />
+﻿<Properties StartupItem="BollerTuneZCore.csproj" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Processors\SteeringProcessor.cs">
+    <Files>
+      <File FileName="Communication.Infrastructure\MessageProcessor\ISteeringProcessor.cs" Line="12" Column="21" />
+      <File FileName="Processors\SteeringProcessor.cs" Line="31" Column="18" />
+      <File FileName="Testing.cs" Line="27" Column="56" />
+      <File FileName="Infrastructure\Config\INetworkConfig.cs" Line="16" Column="1" />
+      <File FileName="Config\NetworkConfig.cs" Line="42" Column="36" />
+      <File FileName="Infrastructure\Config\Network\ConnectionInfo.cs" Line="8" Column="28" />
+      <File FileName="Communication.Infrastructure\MessageProcessor\IMessagePacker.cs" Line="10" Column="46" />
+      <File FileName="Communication\MessageProcessor\MessagePacker.cs" Line="41" Column="19" />
+      <File FileName="Communication\Services\UDPService.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

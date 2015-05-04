@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -36,6 +39,7 @@
     <Compile Include="MessageProcessor\ArduinoMessageProcessor.cs" />
     <Compile Include="Services\UDPClientService.cs" />
     <Compile Include="Services\UDPService.cs" />
+    <Compile Include="MessageProcessor\MessagePacker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

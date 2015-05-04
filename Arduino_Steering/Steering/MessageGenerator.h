@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "Message.h"
-
+#include "Common.h"
 class MessageGenerator
 {
   public:
@@ -13,12 +13,14 @@ class MessageGenerator
     Message* CreateReadPositionMessage(int Position);
     Message* CreateEngineSpeedMessage(int engineSpeed);
     Message* CreateEngineDirectionMessage(int engineDirection);
+    Message* CreateSteeringStartMessage();
     
     
   private:
     Message *ReadPosition;
     Message *EngineSpeed;
     Message *EnigneDirection;
+    Message *StartSteering;
     
     char Startbyte = 0x01;
     char Endbyte = 0xDE;
@@ -27,17 +29,9 @@ class MessageGenerator
     char *steeringPosition;
     char *m_engineSpeed;
     char *m_engineDirection;
-    
-    char SetPositionType = 0x14;
-    char ReadPositionType = 0x15;
-    char SetInputTypeType = 0x16;
-    char SetMaxPowerType = 0x17;
-    
-    char Engine_ReadDirection = 0x1E;
-    char Engine_ReadSpeed = 0x1F;
-    char Engine_SetDirection = 0x20;
-    char Engine_SetSpeed = 0x21;
-    
+    char *fillByte;
+    Common _common;
+
 };
 
 

@@ -194,6 +194,9 @@ void SteeringSetup()
     Serial.println(_state.Center);
     _state.MaxRange = _state.RealPosition;
     _state.Center = (_state.RealPosition / 2) + _state.centerOffset;
+    
+    Message *startMessage = _messageGenerator.CreateSteeringStartMessage();
+    messageProcessor->SendMessage(client,startMessage);
 }
 
 void ReceiveMessages()
