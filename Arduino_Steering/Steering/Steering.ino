@@ -31,27 +31,20 @@ UDPConnectionInfo *udpConnectionInfo;
 Message *incommingMessage;
 /*Message Processing*/
 SteeringMessageProcessor _steeringMessageProcessor;
-/*Config*/
-Config *_config;
-Config test;
 /*Steering*/
-SteeringState *_state;
 SteeringCalculator _steeringCalculator;
 void setup() {
   Serial.begin(9600);
   pinMode(_steeringBoard.DirectionLeftPin,OUTPUT);
   pinMode(_steeringBoard.DirectionRightPin,OUTPUT);
   pinMode(_steeringBoard.PowerPin,OUTPUT);
-  _config = new Config();
-  _config->SetInputType('X');
-  _state = new SteeringState();
   EthernetSetup();
   
 }
 
 void loop() {
  _messageReceiverAction.check();
- if(_state->_enterSetup != 'N')
+ if(_steeringMessageProcessor.GetSetupSpeed() != 'N')
  {
      SteeringSetup();
  }
@@ -72,83 +65,102 @@ void EthernetSetup()
   den vorschriften entspricht oder nicht. Vorher pruefen sonst koennte es gewaltig knallen!
   */
   Serial.println("Waiting for Commands...");
-  _steeringMessageProcessor.Initialize(_config,_state,messageProcessor,client);
+  _steeringMessageProcessor.Initialize(messageProcessor,client);
   
 }
 
 void SteeringSetup()
 {
-    if(_state->_enterSetup == 'L')
+    if(_steeringMessageProcessor.GetSetupState() == 'L')
     {
-      if(_config->InvertDirection == 'X')
+      if(_steeringMessageProcessor.GetInvertState() == 'X')
       {
-         _state->Direction = _config->ConstDirRight;
+        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirRight());        
       }else
       {
-        _state->Direction = _config->ConstDirLeft;
+        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirLeft());
       }
-       _state->MotorSpeed = _config->SetupSpeed;
+      _steeringMessageProcessor.SetMotorSpeed(_steeringMessageProcessor.GetSetupSpeed());
        SetDirection();
        SetSteeringSpeed();
     }else
-    if(_state->_enterSetup == 'C')
+    if(_steeringMessageProcessor.GetSetupState() == 'C')
     {
       encoderMotor.write(0);  
-      _state->_enterSetup = 'E';
+      _steeringMessageProcessor.SetSetupState('E');
     }else
-    if(_state->_enterSetup == 'E')
+    if(_steeringMessageProcessor.GetSetupState() == 'E')
     {
-      _state->RealPosition = (int)encoderMotor.read();  
-    }if(_state->_enterSetup == 'F')
+      //TODO Motor fahren und richtung setzen
+      _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read());  
+    }if(_steeringMessageProcessor.GetSetupState() == 'F')
     {
-      _config->MaximalPosition = _state->RealPosition;
-      _config->Center = (int)(_config->MaximalPosition / 2);
-      _state->_enterSetup = 'N';
+      int maxi = _steeringMessageProcessor.GetCurrentPosition();
+      _steeringMessageProcessor.SetMaxPosition(maxi);
+      _steeringMessageProcessor.SetCenterPosition((int)(maxi / 2));
+      _steeringMessageProcessor.SetSetupState('N');
     }
 }
 
 void ProcessSteering()
 {
-  if(_state->Enabled == 0)
+  if(_steeringMessageProcessor.IsEnabled() != 'Y')
   {
     return;
   }
     //Position von beiden Encodern abfragen
-    _state->RealPosition = (int)encoderMotor.read();
-    _state->SteeringEncoderPosition = (int)encoderSteering.read();
+     _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read());  
+     _steeringMessageProcessor.SetCurrentSteeringPosition((int)encoderSteering.read());
     
-    if(*_config->InputType == 'N')
+    if(_steeringMessageProcessor.GetInputType() == 'N')
     {
-      _state->Direction = 'N';
-      _state->MotorSpeed = 0;
+      _steeringMessageProcessor.SetDirection('N');
+      _steeringMessageProcessor.SetMotorSpeed(0);
       SetDirection();
       SetSteeringSpeed();
       return;
     } 
-    _steeringCalculator.CalculateSpeed();
+    //TODO Wert ob Remote oder nicht
+    char *values = _steeringCalculator.CalculateSpeed(_steeringMessageProcessor.GetSteeringPosition(),
+    _steeringMessageProcessor.GetCurrentPosition(),
+    _steeringMessageProcessor.GetRemotePosition(),
+    _steeringMessageProcessor.GetInputType(),
+    _steeringMessageProcessor.GetDirLeft(),
+    _steeringMessageProcessor.GetDirRight(),
+    _steeringMessageProcessor.GetInvertState(),
+    _steeringMessageProcessor.GetMaxPosition(),
+    _steeringMessageProcessor.GetMinSpeed(),
+    _steeringMessageProcessor.GetMaxSpeed());
+    
+    _steeringMessageProcessor.SetDirection(values[0]);
+    _steeringMessageProcessor.SetMotorSpeed(values[1]);
+    
     SetDirection();
     SetSteeringSpeed();
 }
 
 void SetSteeringSpeed()
 {
-  digitalWrite(_steeringBoard.PowerPin,_state->MotorSpeed);
+  digitalWrite(_steeringBoard.PowerPin,_steeringMessageProcessor.GetMotorSpeed());
 }
 
 void SetDirection()
 {
-  if(_state->Direction == 'L')
+  int h = HIGH;
+  int l = LOW;
+  
+  if(_steeringMessageProcessor.GetDirection() == 'L')
   {
-      digitalWrite(_steeringBoard.DirectionLeftPin,_config->LeftOn);
-      digitalWrite(_steeringBoard.DirectionRightPin,_config->RightOff);
-  }else if(_state->Direction == 'R')
+      digitalWrite(_steeringBoard.DirectionLeftPin,h);
+      digitalWrite(_steeringBoard.DirectionRightPin,l);
+  }else if(_steeringMessageProcessor.GetDirection() == 'R')
   {
-     digitalWrite(_steeringBoard.DirectionLeftPin,_config->LeftOff);
-     digitalWrite(_steeringBoard.DirectionRightPin,_config->RightOn);
+     digitalWrite(_steeringBoard.DirectionLeftPin,l);
+     digitalWrite(_steeringBoard.DirectionRightPin,h);
   }else 
   {
-     digitalWrite(_steeringBoard.DirectionLeftPin,_config->LeftOff);
-     digitalWrite(_steeringBoard.DirectionRightPin,_config->RightOff);
+     digitalWrite(_steeringBoard.DirectionLeftPin,l);
+     digitalWrite(_steeringBoard.DirectionRightPin,l);
   }
 }
 

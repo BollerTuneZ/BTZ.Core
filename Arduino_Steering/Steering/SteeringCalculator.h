@@ -16,10 +16,10 @@ class SteeringCalculator
     void Initialize(Config *sConfig,SteeringState *sSteeringState);
     
     //Berechnet die Geschwindigkeit für den Motor
-    void CalculateSpeed();
+    char * CalculateSpeed(int steeringPosition,int currentPosition,char remotePosition,char inputType,char dirLeft,char dirRight,char invert,int maxPos,char minSpeed,char maxSpeed);
     
   private:
-    int ConvertRemotePosToRealPos();
+    int ConvertRemotePosToRealPos(int remotePosition,int maximum);
   
     char _isInitialized;//Gibt an ob die Klasse ordnungsgemäß Initialisiert worden ist
     char *_currentSpeed;

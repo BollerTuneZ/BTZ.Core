@@ -73,10 +73,12 @@ Message MessageProcessor::ReceiveMessage()
   //Store the DataBytes, which always begin at index 3
   for(int i=0;i < _length;i++)
   {
-        Serial.print("Array:");
-    Serial.print(i);
-    Serial.println((int)(unsigned char)tempMessage.Data[i]);
     tempMessage.Data[i] = udpService->packetBuffer[(i +3)];
+      Serial.print("Buffer:");
+      Serial.print("  Raw:");
+      Serial.print(tempMessage.Data[i]);  
+      Serial.print("//unsigned char:");
+      Serial.println((unsigned char)tempMessage.Data[i]);
   }  
     
   tempMessage.isLegal = 1;

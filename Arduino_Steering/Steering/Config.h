@@ -18,11 +18,11 @@ class Config
      void SetInvert(char i);
          
      /*Identität des Arduinos (Wichtig für das MessageSystem*/
-     char *Identity = new char('L');
+     char Identity = 'L';
      /*Gibt an welcher Input genuutzt werden soll
        1 = Aus;2 = Encoder; 3 = Remote
      */
-     char *InputType = new char('N'); 
+     char InputType = 'N'; 
      /*SpeedLimits*/
      char MaximalSpeed = 125; //default 125
      char MinimalSpeed = 1; //default 1

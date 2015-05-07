@@ -32,10 +32,10 @@ void SteeringMessageProcessor::ProcessMessages()
     }
 }
 //Initialisiert den Calculator
-void SteeringMessageProcessor::Initialize(Config *sConfig,SteeringState *sSteeringState,MessageProcessor *sMessageProcessor,UDPClient *sClient)
+void SteeringMessageProcessor::Initialize(MessageProcessor *sMessageProcessor,UDPClient *sClient)
 {
-  _config = sConfig;
-  _state = sSteeringState;
+  _config = new Config();
+  _state = new SteeringState();
   _messageProcessor = sMessageProcessor;
   _client = sClient;
 }
@@ -77,14 +77,14 @@ void SteeringMessageProcessor::ProcessConfigMessage()
         Serial.print("Read:");
          //Antwort erstellen
          Serial.println(_config->InputType);
-        char *payload = CreatePayloadWithCharParamert(*_config->InputType,configType);
+        char *payload = CreatePayloadWithCharParamert(_config->InputType,configType);
         _messageProcessor->SendMessage(_client,_messageGenerator.CreateMessage(_tCFBase,payload));
       }else if(incommingMessage.Data[1] == Write)
       {
         Serial.println("Write");
-        //Serial.println(incommingMessage.Data[2]);
+        Serial.println(incommingMessage.Data[2]);
         
-        _config->InputType = new char('H');  
+        _config->InputType = incommingMessage.Data[2];  
         Serial.println(_config->InputType);
       }
   }else if(configType == _tCFMaximalSpeed)
@@ -244,7 +244,7 @@ void SteeringMessageProcessor::ProcessStateMessage()
 char *SteeringMessageProcessor::CreatePayloadWithCharParamert(char value,char type)
 {
     char *payload = new char[3];
-    payload[0] = *_config->Identity;
+    payload[0] = _config->Identity;
     payload[1] = type;
     payload[2] = value;
     return payload;
@@ -256,7 +256,7 @@ char *SteeringMessageProcessor::CreatePayloadWithCharParamert(char value,char ty
 char *SteeringMessageProcessor::CreatePayloadWithIntParamert(int value,char type)
 {
   char *payload = new char[6];
-  payload[0] = *_config->Identity;
+  payload[0] = _config->Identity;
   payload[1] = type;
   
   char b[4];
@@ -270,3 +270,74 @@ char *SteeringMessageProcessor::CreatePayloadWithIntParamert(int value,char type
   }
   return payload;
 }
+
+char SteeringMessageProcessor::IsEnabled(){
+  return _state->Enabled;
+}
+char SteeringMessageProcessor::GetSetupState(){
+  return _state->_enterSetup;
+}
+char SteeringMessageProcessor::GetInvertState(){
+  return _config->InvertDirection;
+}
+char SteeringMessageProcessor::GetDirRight(){
+  return _config->ConstDirRight;
+}
+char SteeringMessageProcessor::GetDirLeft(){
+  return _config->ConstDirLeft;
+}
+char SteeringMessageProcessor::GetMotorSpeed(){
+  return _state->MotorSpeed;
+}
+char SteeringMessageProcessor::GetSetupSpeed(){
+  return _config->SetupSpeed;
+}
+int SteeringMessageProcessor::GetMaxPosition(){
+  return _config->MaximalPosition;
+}
+int SteeringMessageProcessor::GetSteeringPosition(){
+  return _state->SteeringEncoderPosition;
+} 
+int SteeringMessageProcessor::GetCurrentPosition(){
+  return _state->RealPosition;
+}
+char SteeringMessageProcessor::GetInputType(){
+  return _config->InputType;
+}
+char SteeringMessageProcessor::GetDirection(){
+  return _state->Direction;
+}
+char SteeringMessageProcessor::GetRemotePosition(){
+  return _state->RemotePosition;
+}
+char SteeringMessageProcessor::GetMaxSpeed(){
+  return _config->MaximalSpeed;
+}
+char SteeringMessageProcessor::GetMinSpeed(){
+  return _config->MinimalSpeed; 
+}
+
+void SteeringMessageProcessor::SetDirection(char dir){
+  _state->Direction = dir;
+}
+void SteeringMessageProcessor::SetMotorSpeed(char speed){
+  _state->MotorSpeed = speed;
+}
+void SteeringMessageProcessor::SetSetupState(char state){
+  _state->_enterSetup = state;
+}
+void SteeringMessageProcessor::SetMaxPosition(int position){
+  _config->MaximalPosition = position;
+}
+void SteeringMessageProcessor::SetCenterPosition(int position){
+  _config->Center = position;
+}
+void SteeringMessageProcessor::SetCurrentPosition(int position){
+  _state->RealPosition = position;
+}
+void SteeringMessageProcessor::SetCurrentSteeringPosition(int position){
+  _state->SteeringEncoderPosition = position;
+}
+
+
+

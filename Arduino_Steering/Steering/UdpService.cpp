@@ -53,6 +53,7 @@ void UdpService::GetBytes()
     
     // read the packet into packetBufffer
     Udp.read(packetBuffer, UDP_TX_PACKET_MAX_SIZE);
+    /*
     for(int i=0;i < sizeof(packetBuffer);i++)
     {
       Serial.print("Buffer:");
@@ -61,6 +62,7 @@ void UdpService::GetBytes()
       Serial.print("//unsigned char:");
       Serial.println((unsigned char)packetBuffer[i]);
     }
+    */
     // send a reply, to the IP address and port that sent us the packet we received
     //Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
     //Udp.write(ReplyBuffer);

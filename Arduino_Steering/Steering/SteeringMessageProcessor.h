@@ -16,9 +16,34 @@ class SteeringMessageProcessor
   SteeringMessageProcessor();
   ~SteeringMessageProcessor();
   
-    void Initialize(Config *sConfig,SteeringState *sSteeringState,MessageProcessor *sMessageProcessor,UDPClient *sClient);
+  void Initialize(MessageProcessor *sMessageProcessor,UDPClient *sClient);
     
-    void ProcessMessages();
+  void ProcessMessages();
+    
+ char IsEnabled();
+ char GetSetupState();
+ char GetInvertState();
+ char GetDirRight();
+ char GetDirLeft();
+ char GetMotorSpeed();
+ char GetSetupSpeed();
+ int GetMaxPosition();
+ int GetSteeringPosition();
+ int GetCurrentPosition();
+ char GetInputType();
+ char GetDirection();
+ char GetRemotePosition();
+ char GetMaxSpeed();
+ char GetMinSpeed();
+ 
+ void SetDirection(char dir);
+ void SetMotorSpeed(char speed);
+ void SetSetupState(char state);
+ void SetMaxPosition(int position);
+ void SetCenterPosition(int position);
+ void SetCurrentPosition(int position);
+ void SetCurrentSteeringPosition(int position);
+    
     
   private:
 

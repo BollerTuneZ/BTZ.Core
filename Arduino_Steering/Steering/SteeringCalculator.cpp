@@ -16,41 +16,52 @@ void SteeringCalculator::Initialize(Config *sConfig,SteeringState *sSteeringStat
 }
     
 //Berechnet die Geschwindigkeit für den Motor InvertDirection
-void SteeringCalculator::CalculateSpeed()
+char* SteeringCalculator::CalculateSpeed(
+int steeringPosition,
+int currentPosition,
+char remotePosition,
+char inputType,
+char dirLeft,
+char dirRight,
+char invert,
+int maxPos,
+char minSpeed,
+char maxSpeed)
 {
-  int positionSteering = _state->SteeringEncoderPosition;
+  int positionSteering = steeringPosition;
   _currentSpeed = new char[2];
   _currentSpeed[0] = 'N';
   
-  if(*_config->InputType == 'R')
+  if(inputType == 'R')
   {
-    positionSteering = ConvertRemotePosToRealPos();
+    positionSteering = ConvertRemotePosToRealPos(remotePosition,maxPos);
   }
-  int diff = _state->RealPosition -positionSteering;
+  int diff = currentPosition -positionSteering;
   
   if(diff < 0)
   {
-    if(_config->InvertDirection == 'X')
+    if(invert == 'X')
     {
-      _state->Direction = _config->ConstDirLeft;
+      _currentSpeed[0] = dirLeft;
     }else
     {
-       _state->Direction = _config->ConstDirRight;
+       _currentSpeed[0] = dirRight;
     }
   }else
   {
-    if(_config->InvertDirection == 'X')
+     if(invert == 'X')
     {
-      _state->Direction = _config->ConstDirRight;
+      _currentSpeed[0] = dirRight;
     }else
     {
-       _state->Direction = _config->ConstDirLeft;
+       _currentSpeed[0] = dirLeft;
     }
   }
-  _state->MotorSpeed =  map(diff,0,_config->MaximalPosition,_config->MinimalSpeed,_config->MaximalSpeed);
+  _currentSpeed[1] = map(diff,0,maxPos,minSpeed,maxSpeed);
+  return _currentSpeed;
 }
 
-int SteeringCalculator::ConvertRemotePosToRealPos()
+int SteeringCalculator::ConvertRemotePosToRealPos(int remotePosition,int maximum)
 {
-    return map(_state->RemotePosition,0,255,0,_config->MaximalPosition);
+    return map(remotePosition,0,255,0,maximum);
 }

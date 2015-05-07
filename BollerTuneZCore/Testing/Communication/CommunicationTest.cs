@@ -30,18 +30,27 @@ namespace Testing
 		public void RunTests()
 		{
 			while (true) {
-				
+
+				Thread.Sleep (500);
+				lock (thisLock) {
+					ArduinoMessage messageRead = new ArduinoMessage { 
+						LengthByte = Convert.ToByte (2),
+						TypeByte = Convert.ToByte ('F'),
+						Payload = new byte[]{ Convert.ToByte ('I'), Convert.ToByte ('R') }
+					};
+					_clientService.SendMessage (ArduinoHostName, ArduinoPort, messageRead);
+				}
 			
 				Thread.Sleep (1000);
 				lock (thisLock) {
 					ArduinoMessage messageSet = new ArduinoMessage { 
-						LengthByte = Convert.ToByte(3),
+						LengthByte = Convert.ToByte (3),
 						TypeByte = Convert.ToByte ('F'),
-						Payload = new byte[]{ Convert.ToByte ('I'), Convert.ToByte ('W'),0x03 }
+						Payload = new byte[]{ Convert.ToByte ('I'), Convert.ToByte ('W'), Convert.ToByte ('Y') }
 					};
 					_clientService.SendMessage (ArduinoHostName, ArduinoPort, messageSet);
-
 				}
+
 			}
 
 		}
