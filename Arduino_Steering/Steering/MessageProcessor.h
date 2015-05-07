@@ -11,16 +11,16 @@ class MessageProcessor
     MessageProcessor(UdpService *udpService);
     
     //Receives a standart min. 5Byte Message
-    Message * ReceiveMessage();
+    Message ReceiveMessage();
     
     int SendMessage(UDPClient *client,Message *message);
-    
+    Message *rMessage;
   private:
   UdpService *udpService;
   char endByte = 0xDE;
   char startByte = 0x01;
-  Message *rMessage;
-  Message *erMessage;
+  
+  Message erMessage;
   int _length;
 };
 

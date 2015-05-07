@@ -12,7 +12,7 @@ class Message
     char StartByte;
     char Length;
     unsigned char Type;
-    char *Data;
+    char Data[10];
     char EndByte;
     
     char isLegal;

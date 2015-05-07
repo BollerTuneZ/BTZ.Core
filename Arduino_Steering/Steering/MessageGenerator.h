@@ -10,17 +10,12 @@ class MessageGenerator
     MessageGenerator();
     ~MessageGenerator();
     
-    Message* CreateReadPositionMessage(int Position);
-    Message* CreateEngineSpeedMessage(int engineSpeed);
-    Message* CreateEngineDirectionMessage(int engineDirection);
-    Message* CreateSteeringStartMessage();
+    Message* CreateMessage(char type,char *payload);
     
     
   private:
-    Message *ReadPosition;
-    Message *EngineSpeed;
-    Message *EnigneDirection;
-    Message *StartSteering;
+    Message *_message;
+
     
     char Startbyte = 0x01;
     char Endbyte = 0xDE;
