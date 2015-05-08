@@ -9,6 +9,10 @@ namespace BollerTuneZCore
 		{
 			BootStrapper.Run ();
 
+			var programm = TinyIoC.TinyIoCContainer.Current.Resolve<Main> ();
+			programm.Run ();
+			Console.ReadKey ();
+			/*
 			JoyStickTesting testing = TinyIoC.TinyIoCContainer.Current.Resolve<JoyStickTesting> ();
 			//CommunicationTest testing = new CommunicationTest();
 			//testing.RunTests ();
@@ -20,7 +24,6 @@ namespace BollerTuneZCore
 				testing.Run();
 			});
 */
-			Console.ReadKey ();
 		}
 	}
 }

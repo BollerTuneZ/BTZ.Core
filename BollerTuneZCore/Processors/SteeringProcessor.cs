@@ -35,6 +35,27 @@ namespace BollerTuneZCore
 		}
 
 		#region ISteeringProcessor implementation
+		public void SetEnabled (bool enabled)
+		{
+			ArduinoMessage message;
+			message = new ArduinoMessage ();
+			message.LengthByte = 0x01;
+			message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
+			if (enabled) {
+				message.Payload = new byte[] {
+					(byte)Communication.Infrastructure.SteeringState.Enabled,
+					(byte)SteeringBaseBytes.Write,
+					Convert.ToByte ('Y')
+				};
+			} else {
+				message.Payload = new byte[] {
+					(byte)Communication.Infrastructure.SteeringState.Enabled,
+					(byte)SteeringBaseBytes.Write,
+					Convert.ToByte ('N')
+				};
+			}
+			SendMessage (message);
+		}
 		public void StartSetup ()
 		{
 			ArduinoMessage message;
@@ -86,6 +107,13 @@ namespace BollerTuneZCore
 		public void Initialize ()
 		{
 			s_log.Info (String.Format ("Initialize Steering {0}", DateTime.Now));
+			ArduinoMessage message;
+			message = new ArduinoMessage ();
+			message.LengthByte = 0x03;
+			message.TypeByte = (byte)SteeringConfigCollection.InputType;
+			message.Payload = new byte[]{ (byte)SteeringConfigs.InputType, (byte)SteeringBaseBytes.Write, Convert.ToByte ('R') };
+			SendMessage (message);
+			s_log.Info ("Set InputType to Remote");
 		}
 
 		#endregion

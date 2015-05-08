@@ -8,7 +8,7 @@ namespace Communication.Infrastructure
 	public interface ISteeringProcessor
 	{
 		void Steer(int value);
-
+		void SetEnabled (bool enabled);
 		void Initialize();
 
 		/// <summary>

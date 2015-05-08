@@ -40,8 +40,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing.cs" />
     <Compile Include="BootStrapper.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Processors\SteeringProcessor.cs" />
+    <Compile Include="Main.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -90,7 +90,6 @@ void SteeringSetup()
     }else
     if(_steeringMessageProcessor.GetSetupState() == 'E')
     {
-      //TODO Motor fahren und richtung setzen
       _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read()); 
      
       if(_steeringMessageProcessor.GetInvertState() == 'X')
@@ -152,6 +151,9 @@ void ProcessSteering()
 
 void SetSteeringSpeed()
 {
+  Serial.print("MotorSpeed: ");
+  Serial.println(_steeringMessageProcessor.GetMotorSpeed());
+  
   digitalWrite(_steeringBoard.PowerPin,_steeringMessageProcessor.GetMotorSpeed());
 }
 
@@ -159,6 +161,9 @@ void SetDirection()
 {
   int h = HIGH;
   int l = LOW;
+  
+        Serial.print("Direction: ");
+      Serial.println(_steeringMessageProcessor.GetDirection());
   
   if(_steeringMessageProcessor.GetDirection() == 'L')
   {

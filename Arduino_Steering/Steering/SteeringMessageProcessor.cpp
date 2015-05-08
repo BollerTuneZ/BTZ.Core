@@ -211,7 +211,7 @@ void SteeringMessageProcessor::ProcessStateMessage()
         _messageProcessor->SendMessage(_client,_messageGenerator.CreateMessage(_tCSBase,payload));
       }else if(incommingMessage.Data[1] == Write)
       {
-        _state->Enabled = (unsigned char)incommingMessage.Data[2];  
+        _state->Enabled = incommingMessage.Data[2];  
       }    
   }else
   if(stateType == _tSRunning)

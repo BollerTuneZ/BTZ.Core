@@ -2,6 +2,7 @@
 using Communication.Infrastructure;
 using Infrastructure;
 using log4net;
+using System.Threading;
 
 
 namespace BollerTuneZCore
@@ -12,10 +13,14 @@ namespace BollerTuneZCore
 		readonly ISteeringProcessor _steeringProcessor;
 		readonly ISteeringConfigMessageProcessor _steeringConfigProcessor;
 		readonly IBTZJoyStickController _joyStick;
+		DateTime lastTimeSetupPressed = DateTime.Now;
+		DateTime lastTimeEnabledPressed = DateTime.Now;
+		bool IsEnabled = false;
 
 		public Main (ISteeringProcessor _steeringProcessor, ISteeringConfigMessageProcessor _steeringConfigProcessor, IBTZJoyStickController _joyStick)
 		{
 			this._steeringProcessor = _steeringProcessor;
+			_steeringProcessor.Initialize ();
 			this._steeringConfigProcessor = _steeringConfigProcessor;
 			this._joyStick = _joyStick;
 		}
@@ -23,7 +28,13 @@ namespace BollerTuneZCore
 		public void Run()
 		{
 			s_log.Info ("BollerTuneZ OS 1.0.1");
+			Initialize ();
 
+			new Thread (() => {
+				while (true) {
+					var input = Console.ReadLine();
+				}
+			}).Start ();
 		}
 
 		void Initialize()
@@ -32,7 +43,6 @@ namespace BollerTuneZCore
 				s_log.Error ("Could not Initialize Joystick");
 				return;
 			}
-
 			_joyStick.OnPowerChanged += OnPowerChanged;
 			_joyStick.OnSteeringChanged += OnSteeringPositionChanged;
 			_joyStick.OnSpecialChanged += OnSpecialButtonChanged;
@@ -41,12 +51,41 @@ namespace BollerTuneZCore
 		#region JoyStick Events
 		void OnSpecialButtonChanged (object sender, EventArgs e)
 		{
-			
+			SpecialButtonEventArgs args = (SpecialButtonEventArgs)e;
+			if (args.Key == 8) {
+				if (args.Triggered) {
+					if ((DateTime.Now.Subtract (lastTimeSetupPressed)).Seconds < 1) {
+						s_log.Info ("Read configs");
+						_steeringConfigProcessor.ReadConfigs ();
+					}
+					lastTimeSetupPressed = DateTime.Now;						
+				}
+			} else if (args.Key == 0) {
+				if (args.Triggered) {
+					if ((DateTime.Now.Subtract (lastTimeEnabledPressed)).Seconds < 1) {
+						if (IsEnabled) {
+							IsEnabled = false;
+						} else {
+							IsEnabled = true;
+						}
+						s_log.Info (String.Format("Set Enabled to {0}",IsEnabled));
+						_steeringProcessor.SetEnabled (IsEnabled);
+					}
+					lastTimeEnabledPressed = DateTime.Now;	
+				}
+			} else if (args.Key == 2) {
+				s_log.Info ("Changed SetupLevel");
+				_steeringProcessor.ChangeSetupLevel ();
+			}
 		}
 
 		void OnSteeringPositionChanged (object sender, EventArgs e)
 		{
-			
+			SoftControlEventArgs args = (SoftControlEventArgs)e;
+			if (IsEnabled) {
+				s_log.Info (String.Format ("Change position to {0}", args.Value));
+				_steeringProcessor.Steer (args.Value);
+			}
 		}
 
 		void OnPowerChanged (object sender, EventArgs e)
