@@ -46,6 +46,7 @@ namespace BollerTuneZCore
 			_joyStick.OnPowerChanged += OnPowerChanged;
 			_joyStick.OnSteeringChanged += OnSteeringPositionChanged;
 			_joyStick.OnSpecialChanged += OnSpecialButtonChanged;
+			_joyStick.Run ();
 		}
 
 		#region JoyStick Events

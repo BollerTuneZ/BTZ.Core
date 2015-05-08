@@ -54,7 +54,7 @@ void EthernetSetup()
 {
     Serial.println("Initialisiere Ethernet Componenten");
     udpConnectionInfo = new UDPConnectionInfo();
-    udpConnectionInfo->Initialize(192,168,2,177,8888); //IP und Port änderung muss beim BTZ Core bekannt sein
+    udpConnectionInfo->Initialize(192,168,1,177,8888); //IP und Port änderung muss beim BTZ Core bekannt sein
     updService = new UdpService();    
     updService->Init(udpConnectionInfo);    
     messageProcessor = new MessageProcessor(updService);    
