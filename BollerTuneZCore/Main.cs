@@ -55,6 +55,7 @@ namespace BollerTuneZCore
 		void OnSpecialButtonChanged (object sender, EventArgs e)
 		{
 			SpecialButtonEventArgs args = (SpecialButtonEventArgs)e;
+			Console.WriteLine(String.Format("ButtonKey {0}, Value {1}",args.Key,args.Triggered));
 			if (args.Key == 8) {
 				if (args.Triggered) {
 					if ((DateTime.Now.Subtract (lastTimeSetupPressed)).Seconds < 1) {
