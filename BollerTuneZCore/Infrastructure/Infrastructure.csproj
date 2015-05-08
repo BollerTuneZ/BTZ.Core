@@ -40,7 +40,6 @@
     <Compile Include="JoystickApi\IBTZJoyStickController.cs" />
     <Compile Include="JoystickApi\JoyStickEventArgs\SoftControlEventArgs.cs" />
     <Compile Include="JoystickApi\JoyStickEventArgs\SpecialButtonEventArgs.cs" />
-    <Compile Include="Config\INetworkConfig.cs" />
     <Compile Include="Config\Network\ConnectionInfo.cs" />
     <Compile Include="Config\Steering\SteeringConfigCollection.cs" />
     <Compile Include="States\SteeringState.cs" />

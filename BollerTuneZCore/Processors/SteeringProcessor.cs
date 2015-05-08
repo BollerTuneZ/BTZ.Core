@@ -9,17 +9,15 @@ namespace BollerTuneZCore
 	public class SteeringProcessor : ISteeringProcessor
 	{
 		readonly IUDPClientService _clientService;
-		readonly INetworkConfig _networkconfig;
 		readonly static ILog s_log = LogManager.GetLogger (typeof(SteeringProcessor));
 		readonly IUDPService _steeringUdpService;
 		readonly IMessagePacker _messagePacker;
 		object lockCommunication = new object ();
 		volatile bool Calibrated = false;
 
-		public SteeringProcessor (IUDPClientService _clientService, INetworkConfig _networkconfig, IUDPService _steeringUdpService, IMessagePacker _messagePacker)
+		public SteeringProcessor (IUDPClientService _clientService, IUDPService _steeringUdpService, IMessagePacker _messagePacker)
 		{
 			this._clientService = _clientService;
-			this._networkconfig = _networkconfig;
 			this._steeringUdpService = _steeringUdpService;
 			this._messagePacker = _messagePacker;
 			this._steeringUdpService.OnReveicedData += OnReceiveData;
