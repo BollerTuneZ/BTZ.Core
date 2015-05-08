@@ -3,8 +3,9 @@ using Infrastructure;
 
 namespace BollerTuneZCore
 {
-	public class NetworkConfig : INetworkConfig
+	public class NetworkConfig //: INetworkConfig
 	{
+		/*
 		public NetworkConfig ()
 		{
 			SteeringConnectionInfo = new ConnectionInfo () {
@@ -43,8 +44,7 @@ namespace BollerTuneZCore
 		}
 
 		#endregion
-		public ConnectionInfo SteeringConnectionInfo{get;set;}
-		public ConnectionInfo PowerConnectionInfo{get;set;}
+		*/
 
 	}
 }

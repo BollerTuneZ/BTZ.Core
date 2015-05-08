@@ -38,16 +38,15 @@ namespace BollerTuneZCore
 		}
 
 		#region ISteeringProcessor implementation
-		public TObject ReadConfig<TObject> (SteeringConfigs config)
+		public void StartSetup ()
 		{
 			throw new NotImplementedException ();
 		}
 
-		public bool SetConfig<TObject> (SteeringConfigs configs, TObject tObject)
+		public void ChangeSetupLevel ()
 		{
 			throw new NotImplementedException ();
 		}
-
 		public void Steer (int value)
 		{
 			if (!Calibrated) {
@@ -58,7 +57,7 @@ namespace BollerTuneZCore
 			message.LengthByte = 0x01;
 			message.TypeByte = EnumConverter.MessageTypeToType (MessageType.Steering_position);
 			message.Payload = new byte[]{ Convert.ToByte (value) };
-			SendMessage ();
+			SendMessage (message);
 		}
 
 		public void Initialize ()
@@ -69,9 +68,7 @@ namespace BollerTuneZCore
 			message.LengthByte = 0x01;
 			message.TypeByte = 0x03;
 			message.Payload = new byte[]{ 0x02 };
-			_clientService.SendMessage (_networkconfig.GetSteeringConnectionInfo().Hostname,
-				_networkconfig.GetSteeringConnectionInfo().Port,
-				message);
+			SendMessage (message);
 			s_log.Info (String.Format ("Send Command for calibrating {0}", DateTime.Now));
 			new Thread (() => {
 				while (!Calibrated) {
@@ -87,8 +84,8 @@ namespace BollerTuneZCore
 		void SendMessage(ArduinoMessage message)
 		{
 			lock (lockCommunication) {
-				_clientService.SendMessage (_networkconfig.GetSteeringConnectionInfo ().Hostname,
-					_networkconfig.GetSteeringConnectionInfo ().Port,
+				_clientService.SendMessage (ConnectionInfo.ArduinoHostNameSteering,
+					ConnectionInfo.ArduinoPortSteering,
 					message);
 			}
 		}

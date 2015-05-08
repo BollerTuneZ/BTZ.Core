@@ -16,7 +16,7 @@ namespace BollerTuneZCore
 		}
 		public static void Run()
 		{
-			TinyIoCContainer.Current.Register<INetworkConfig,NetworkConfig> ();
+			//TinyIoCContainer.Current.Register<INetworkConfig,NetworkConfig> ();
 			TinyIoCContainer.Current.Register<IMessagePacker,MessagePacker> ();
 			TinyIoCContainer.Current.Register<IUDPClientService,UDPClientService> ();
 			TinyIoCContainer.Current.Register<IUDPService,UDPService> ();

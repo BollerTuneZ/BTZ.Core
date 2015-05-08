@@ -39,7 +39,7 @@ namespace Communication
 		{
 			ArduinoMessage message = new ArduinoMessage {
 				LengthByte = 0x02,
-				TypeByte = SteeringConfigs.Base,
+				TypeByte = (byte)SteeringConfigs.Base,
 				Payload = new byte[]{(byte)config,(byte)SteeringBaseBytes.Read}
 			};
 			return message;
