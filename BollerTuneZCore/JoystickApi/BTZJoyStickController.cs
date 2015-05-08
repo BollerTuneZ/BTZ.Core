@@ -87,15 +87,12 @@ namespace JoystickApi
 
 		void ProcessSpecialButtons(JoyStickEventArgs args)
 		{
-			Console.WriteLine(String.Format("ButtonBTZ {0} : {1}",args.Key,args.Triggered));
-			if (args.Key == 9) {
-				if (args.Triggered != TempomatState) {
-					OnSpecialChanged (this, new SpecialButtonEventArgs () {
-						Triggered = args.Triggered
-					});
-				}
-				TempomatState = args.Triggered;
-			}
+			//Console.WriteLine(String.Format("ButtonBTZ {0} : {1}",args.Key,args.Triggered));
+
+			OnSpecialChanged (this, new SpecialButtonEventArgs () {
+				Triggered = args.Triggered,
+				Key = args.Key
+			});
 		}
 
 		public static int Map (int value, int fromSource, int toSource, int fromTarget, int toTarget)

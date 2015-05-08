@@ -7,7 +7,7 @@ namespace Infrastructure
 		public SpecialButtonEventArgs ()
 		{
 		}
-
+		public int Key{ get; set;}
 		public bool Triggered{get;set;}
 	}
 }
