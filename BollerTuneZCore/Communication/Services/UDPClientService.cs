@@ -23,10 +23,6 @@ namespace Communication
 			Socket server = new Socket(AddressFamily.InterNetwork,
 				SocketType.Dgram, ProtocolType.Udp);
 			byte[] payload = MessageToByteArray (message);
-			for (int i = 0; i < payload.Length; i++) {
-				Console.WriteLine (payload [i]);
-			}
-			Console.WriteLine (payload.Length);
 			server.SendTo(payload, payload.Length, SocketFlags.None, RemoteEndPoint);
 		}
 		#endregion
