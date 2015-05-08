@@ -55,7 +55,6 @@ namespace BollerTuneZCore
 		void OnSpecialButtonChanged (object sender, EventArgs e)
 		{
 			SpecialButtonEventArgs args = (SpecialButtonEventArgs)e;
-			s_log.Info (String.Format ("Button was clicked {0} : {1}", args.Key, args.Triggered));
 			if (args.Key == 8) {
 				if (args.Triggered) {
 					if ((DateTime.Now.Subtract (lastTimeSetupPressed)).Seconds < 1) {
