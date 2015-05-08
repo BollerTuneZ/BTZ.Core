@@ -78,8 +78,10 @@ namespace BollerTuneZCore
 					lastTimeEnabledPressed = DateTime.Now;	
 				}
 			} else if (args.Key == 2) {
-				s_log.Info ("Changed SetupLevel");
-				_steeringProcessor.ChangeSetupLevel ();
+				if (args.Triggered) {
+					s_log.Info ("Changed SetupLevel");
+					_steeringProcessor.ChangeSetupLevel ();
+				}
 			}
 		}
 

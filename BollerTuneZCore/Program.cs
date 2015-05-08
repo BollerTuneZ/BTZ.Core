@@ -18,18 +18,19 @@ namespace BollerTuneZCore
 		{
 			Setup ();
 			BootStrapper.Run ();
+			/*
 			ISteeringProcessor steeringProcessor = TinyIoC.TinyIoCContainer.Current.Resolve<ISteeringProcessor> ();
 			ISteeringConfigMessageProcessor steeringConfigMessageProcessor = TinyIoC.TinyIoCContainer.Current.Resolve<ISteeringConfigMessageProcessor> ();
-			IBTZJoyStickController _joyStick = TinyIoC.TinyIoCContainer.Current.Resolve<IBTZJoyStickController> ();
-			Main programm = new BollerTuneZCore.Main (steeringProcessor, steeringConfigMessageProcessor, _joyStick);
+			IBTZJoyStickController _joyStick = TinyIoC.TinyIoCContainer.Current.Resolve<IBTZJoyStickController> ();*/
+			Main programm = TinyIoC.TinyIoCContainer.Current.Resolve<BollerTuneZCore.Main> ();
 			Console.WriteLine ("Going to run");
-			programm.Run ();
+			//programm.Run ();
+			CommunicationTest testing = new CommunicationTest();
+			testing.RunTests ();
 			Console.ReadKey ();
 			/*
 			JoyStickTesting testing = TinyIoC.TinyIoCContainer.Current.Resolve<JoyStickTesting> ();
-			//CommunicationTest testing = new CommunicationTest();
-			//testing.RunTests ();
-			testing.Run ();
+
 			/*
 			Console.WriteLine ("Hello World!");
 			new Thread (() => {

@@ -7,7 +7,7 @@ UDPConnectionInfo::UDPConnectionInfo()
     this->macAddr = new char[6];
   
   //Default MacAddress
-  this->macAddr[0] = 0x00;
+  this->macAddr[0] = 0x4F;
   this->macAddr[1] = 0xAD;
   this->macAddr[2] = 0xBE;
   this->macAddr[3] = 0xEF;
