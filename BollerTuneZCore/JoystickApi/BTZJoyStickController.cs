@@ -65,12 +65,12 @@ namespace JoystickApi
 			}  else if (args.Key == 2) {
 
 				int mappedValue = (int)map (args.Value, Low, High, -255, 0);
-				if (mappedValue != SteeringPosition) {
-					OnSteeringChanged (this, new SoftControlEventArgs () {
+				if (mappedValue != PowerPosition) {
+					OnPowerChanged (this, new SoftControlEventArgs () {
 						Value = mappedValue,
 					});
 				}
-				SteeringPosition = mappedValue;
+				PowerPosition = mappedValue;
 			}
 
 			else if (args.Key == 0) {
