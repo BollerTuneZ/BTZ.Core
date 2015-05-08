@@ -102,7 +102,7 @@ class SteeringMessageProcessor
     const char _tSRunning = 'R';
     const char _tSDirection = 'D';
     const char _tSEncoderMotor = 'M';
-    const char _tSEncoderSteering = 'M';
+    const char _tSEncoderSteering = 'N';
     const char _tSRemotePosition = 'r';
     
     

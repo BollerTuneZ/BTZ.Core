@@ -91,7 +91,19 @@ void SteeringSetup()
     if(_steeringMessageProcessor.GetSetupState() == 'E')
     {
       //TODO Motor fahren und richtung setzen
-      _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read());  
+      _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read()); 
+     
+      if(_steeringMessageProcessor.GetInvertState() == 'X')
+      {
+        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirLeft());        
+      }else
+      {
+        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirRight());
+      }
+      _steeringMessageProcessor.SetMotorSpeed(_steeringMessageProcessor.GetSetupSpeed());
+       SetDirection();
+       SetSteeringSpeed();
+      
     }if(_steeringMessageProcessor.GetSetupState() == 'F')
     {
       int maxi = _steeringMessageProcessor.GetCurrentPosition();

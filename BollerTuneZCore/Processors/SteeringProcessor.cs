@@ -14,6 +14,7 @@ namespace BollerTuneZCore
 		readonly IMessagePacker _messagePacker;
 		object lockCommunication = new object ();
 		volatile bool Calibrated = false;
+		char SetupLevel = 'N';
 
 		public SteeringProcessor (IUDPClientService _clientService, IUDPService _steeringUdpService, IMessagePacker _messagePacker)
 		{
@@ -30,21 +31,45 @@ namespace BollerTuneZCore
 			DataEventArgs args = (DataEventArgs)e;
 			var message = _messagePacker.PackMessage (args.Data);
 
-			if (message.TypeByte == 0x18) {
-				Calibrated = true;
-			}
+			Console.WriteLine(String.Format("Got Message {0}",message.Payload));
 		}
 
 		#region ISteeringProcessor implementation
 		public void StartSetup ()
 		{
-			throw new NotImplementedException ();
+			ArduinoMessage message;
+			message = new ArduinoMessage ();
+			message.LengthByte = 0x01;
+			message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
+			message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed,(byte)SteeringBaseBytes.Write,Convert.ToByte('L') };
+			SendMessage (message);
+			SetupLevel = 'L';
+			s_log.Info (String.Format("Setup Level {0}",SetupLevel));
 		}
 
 		public void ChangeSetupLevel ()
 		{
-			throw new NotImplementedException ();
+			if (SetupLevel == 'L') {
+				ArduinoMessage message;
+				message = new ArduinoMessage ();
+				message.LengthByte = 0x03;
+				message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
+				message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed, (byte)SteeringBaseBytes.Write, Convert.ToByte ('C') };
+				SendMessage (message);
+				SetupLevel = 'C';
+				s_log.Info (String.Format("Setup Level {0}",SetupLevel));
+			} else if (SetupLevel == 'C') {
+				ArduinoMessage message;
+				message = new ArduinoMessage ();
+				message.LengthByte = 0x03;
+				message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
+				message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed, (byte)SteeringBaseBytes.Write, Convert.ToByte ('F') };
+				SendMessage (message);
+				SetupLevel = 'N';
+				s_log.Info ("Setup Fertig");
+			}
 		}
+
 		public void Steer (int value)
 		{
 			if (!Calibrated) {
@@ -52,29 +77,15 @@ namespace BollerTuneZCore
 			}
 			ArduinoMessage message;
 			message = new ArduinoMessage ();
-			message.LengthByte = 0x01;
-			message.TypeByte = EnumConverter.MessageTypeToType (MessageType.Steering_position);
-			message.Payload = new byte[]{ Convert.ToByte (value) };
+			message.LengthByte = 0x02;
+			message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
+			message.Payload = new byte[]{ (byte)Communication.Infrastructure.SteeringState.RemotePosition,Convert.ToByte(value) };
 			SendMessage (message);
 		}
 
 		public void Initialize ()
 		{
 			s_log.Info (String.Format ("Initialize Steering {0}", DateTime.Now));
-			ArduinoMessage message;
-			message = new ArduinoMessage ();
-			message.LengthByte = 0x01;
-			message.TypeByte = 0x03;
-			message.Payload = new byte[]{ 0x02 };
-			SendMessage (message);
-			s_log.Info (String.Format ("Send Command for calibrating {0}", DateTime.Now));
-			new Thread (() => {
-				while (!Calibrated) {
-					s_log.Info ("waiting for complete Calibrate");
-					Thread.Sleep (1000);
-				}
-			}).Start ();
-
 		}
 
 		#endregion

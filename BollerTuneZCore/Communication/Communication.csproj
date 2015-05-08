@@ -46,6 +46,7 @@
   <ItemGroup>
     <Folder Include="MessageProcessor\" />
     <Folder Include="Services\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communication.Infrastructure\Communication.Infrastructure.csproj">

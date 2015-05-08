@@ -47,6 +47,7 @@
     <Compile Include="Enums\Steering\SteeringControlling.cs" />
     <Compile Include="MessageProcessor\ISteeringConfigMessageProcessor.cs" />
     <Compile Include="Enums\Steering\SteeringBaseBytes.cs" />
+    <Compile Include="Enums\Steering\SteeringState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

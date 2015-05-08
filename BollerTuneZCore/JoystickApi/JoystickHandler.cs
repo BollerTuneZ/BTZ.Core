@@ -77,7 +77,7 @@ namespace JoystickApi
 							Key = key,
 							Triggered = j.Button[key]
 						});
-						//Console.WriteLine(String.Format("Button {0}, {1}",key,j.Button[key]));
+						Console.WriteLine(String.Format("Button {0}, {1}",key,j.Button[key]));
 					}
 				}
 			}
