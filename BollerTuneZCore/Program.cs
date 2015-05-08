@@ -9,10 +9,10 @@ namespace BollerTuneZCore
 		{
 			BootStrapper.Run ();
 
-			//JoyStickTesting testing = TinyIoC.TinyIoCContainer.Current.Resolve<JoyStickTesting> ();
-			CommunicationTest testing = new CommunicationTest();
-			testing.RunTests ();
-			//testing.Run ();
+			JoyStickTesting testing = TinyIoC.TinyIoCContainer.Current.Resolve<JoyStickTesting> ();
+			//CommunicationTest testing = new CommunicationTest();
+			//testing.RunTests ();
+			testing.Run ();
 			/*
 			Console.WriteLine ("Hello World!");
 			new Thread (() => {
