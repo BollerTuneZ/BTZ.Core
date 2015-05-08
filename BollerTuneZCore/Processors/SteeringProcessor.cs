@@ -16,13 +16,14 @@ namespace BollerTuneZCore
 		volatile bool Calibrated = false;
 		char SetupLevel = 'N';
 
-		public SteeringProcessor (IUDPClientService _clientService, IUDPService _steeringUdpService, IMessagePacker _messagePacker)
+		public SteeringProcessor (IUDPClientService _clientService, IUDPService steeringUdpService, IMessagePacker _messagePacker)
 		{
 			this._clientService = _clientService;
-			this._steeringUdpService = _steeringUdpService;
+			this._steeringUdpService = steeringUdpService;
 			this._messagePacker = _messagePacker;
 			this._steeringUdpService.OnReveicedData += OnReceiveData;
-			this._steeringUdpService.Run (9050);
+			new Thread(() =>
+				_steeringUdpService.Run (9050)).Start();
 		}
 		
 

@@ -27,7 +27,6 @@ namespace BollerTuneZCore
 			TinyIoCContainer.Current.Register<ISteeringProcessor,SteeringProcessor> ().AsSingleton();
 			TinyIoCContainer.Current.Register<ISteeringConfigMessageProcessor,SteeringConfigMessageProcessor> ().AsSingleton();
 			TinyIoCContainer.Current.Register<Main> ();
-
 		}
 	}
 }
