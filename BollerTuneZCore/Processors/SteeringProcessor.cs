@@ -13,6 +13,7 @@ namespace BollerTuneZCore
 		readonly static ILog s_log = LogManager.GetLogger (typeof(SteeringProcessor));
 		readonly IUDPService _steeringUdpService;
 		readonly IMessagePacker _messagePacker;
+		object lockCommunication = new object ();
 		volatile bool Calibrated = false;
 
 		public SteeringProcessor (IUDPClientService _clientService, INetworkConfig _networkconfig, IUDPService _steeringUdpService, IMessagePacker _messagePacker)
@@ -37,6 +38,15 @@ namespace BollerTuneZCore
 		}
 
 		#region ISteeringProcessor implementation
+		public TObject ReadConfig<TObject> (SteeringConfigs config)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool SetConfig<TObject> (SteeringConfigs configs, TObject tObject)
+		{
+			throw new NotImplementedException ();
+		}
 
 		public void Steer (int value)
 		{
@@ -48,9 +58,7 @@ namespace BollerTuneZCore
 			message.LengthByte = 0x01;
 			message.TypeByte = EnumConverter.MessageTypeToType (MessageType.Steering_position);
 			message.Payload = new byte[]{ Convert.ToByte (value) };
-			_clientService.SendMessage (_networkconfig.GetSteeringConnectionInfo().Hostname,
-				_networkconfig.GetSteeringConnectionInfo().Port,
-				message);
+			SendMessage ();
 		}
 
 		public void Initialize ()
@@ -75,6 +83,18 @@ namespace BollerTuneZCore
 		}
 
 		#endregion
+
+		void SendMessage(ArduinoMessage message)
+		{
+			lock (lockCommunication) {
+				_clientService.SendMessage (_networkconfig.GetSteeringConnectionInfo ().Hostname,
+					_networkconfig.GetSteeringConnectionInfo ().Port,
+					message);
+			}
+		}
+
+
+		//ArduinoMessage CreateControllingMessage(
 	}
 }
 

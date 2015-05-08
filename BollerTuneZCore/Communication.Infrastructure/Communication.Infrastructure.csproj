@@ -43,6 +43,8 @@
     <Compile Include="Services\EventArgs\DataEventArgs.cs" />
     <Compile Include="MessageProcessor\ISteeringProcessor.cs" />
     <Compile Include="MessageProcessor\IMessagePacker.cs" />
+    <Compile Include="Enums\Steering\SteeringConfigs.cs" />
+    <Compile Include="Enums\Steering\SteeringControlling.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -58,5 +60,6 @@
     <Folder Include="Util\" />
     <Folder Include="Services\" />
     <Folder Include="Services\EventArgs\" />
+    <Folder Include="Enums\Steering\" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,10 @@ namespace Communication.Infrastructure
 		void Steer(int value);
 
 		void Initialize();
+
+		TObject ReadConfig<TObject>(SteeringConfigs config);
+
+		bool SetConfig<TObject> (SteeringConfigs configs, TObject tObject);
 	}
 }
 
