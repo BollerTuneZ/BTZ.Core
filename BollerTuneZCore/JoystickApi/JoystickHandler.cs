@@ -66,7 +66,7 @@ namespace JoystickApi
 							Key = key,
 							Value = j.Axis[key]
 						});
-						//Console.WriteLine(String.Format("Axis {0}, {1}",key,j.Axis[key]));
+						Console.WriteLine(String.Format("Axis {0}, {1}",key,j.Axis[key]));
 					}
 
 					// Prints Buttons values
@@ -77,6 +77,7 @@ namespace JoystickApi
 							Key = key,
 							Triggered = j.Button[key]
 						});
+						Console.WriteLine(String.Format("Button {0}, {1}",key,j.Button[key]));
 					}
 				}
 			}
