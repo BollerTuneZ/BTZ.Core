@@ -39,7 +39,6 @@ void setup() {
   pinMode(_steeringBoard.DirectionRightPin,OUTPUT);
   pinMode(_steeringBoard.PowerPin,OUTPUT);
   EthernetSetup();
-  
 }
 
 void loop() {
