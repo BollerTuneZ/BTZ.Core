@@ -2,10 +2,10 @@
 
 namespace Infrastructure
 {
-	public class ConnectionInfo
+	public static class ConnectionInfo
 	{
-		public string Hostname{get;set;}
-		public int Port{get;set;}
+		public const string ArduinoHostNameSteering = "192.168.2.177";
+		public const int ArduinoPortSteering = 8888;
 	}
 }
 

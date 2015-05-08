@@ -40,6 +40,7 @@
     <Compile Include="Services\UDPClientService.cs" />
     <Compile Include="Services\UDPService.cs" />
     <Compile Include="MessageProcessor\MessagePacker.cs" />
+    <Compile Include="MessageProcessor\SteeringConfigMessageProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

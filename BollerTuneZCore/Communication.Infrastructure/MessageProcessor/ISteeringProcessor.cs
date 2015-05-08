@@ -11,9 +11,14 @@ namespace Communication.Infrastructure
 
 		void Initialize();
 
-		TObject ReadConfig<TObject>(SteeringConfigs config);
-
-		bool SetConfig<TObject> (SteeringConfigs configs, TObject tObject);
+		/// <summary>
+		/// Beginnt das Setup
+		/// </summary>
+		void StartSetup();
+		/// <summary>
+		/// Geht einen Schritt weiter im Setup
+		/// </summary>
+		void ChangeSetupLevel();
 	}
 }
 

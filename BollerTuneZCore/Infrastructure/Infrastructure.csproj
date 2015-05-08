@@ -42,6 +42,8 @@
     <Compile Include="JoystickApi\JoyStickEventArgs\SpecialButtonEventArgs.cs" />
     <Compile Include="Config\INetworkConfig.cs" />
     <Compile Include="Config\Network\ConnectionInfo.cs" />
+    <Compile Include="Config\Steering\SteeringConfigCollection.cs" />
+    <Compile Include="States\SteeringState.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -54,5 +56,7 @@
     <Folder Include="JoystickApi\JoyStickEventArgs\" />
     <Folder Include="Config\" />
     <Folder Include="Config\Network\" />
+    <Folder Include="Config\Steering\" />
+    <Folder Include="States\" />
   </ItemGroup>
 </Project>

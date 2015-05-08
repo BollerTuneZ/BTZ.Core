@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="BollerTuneZCore.csproj" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BootStrapper.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Communication.Infrastructure\MessageProcessor\ISteeringProcessor.cs" Line="12" Column="21" />
-      <File FileName="Processors\SteeringProcessor.cs" Line="73" Column="15" />
+      <File FileName="Communication.Infrastructure\MessageProcessor\ISteeringProcessor.cs" Line="16" Column="70" />
+      <File FileName="Processors\SteeringProcessor.cs" Line="97" Column="5" />
       <File FileName="BootStrapper.cs" Line="5" Column="22" />
+      <File FileName="Testing\Communication\CommunicationTest.cs" Line="36" Column="6" />
+      <File FileName="Communication.Infrastructure\Enums\Steering\SteeringConfigs.cs" Line="24" Column="24" />
+      <File FileName="Communication.Infrastructure\Enums\Steering\SteeringControlling.cs" Line="7" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
