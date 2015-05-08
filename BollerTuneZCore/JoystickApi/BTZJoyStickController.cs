@@ -62,7 +62,18 @@ namespace JoystickApi
 					});
 				}
 				PowerPosition = mappedValue;
-			} else if (args.Key == 3) {
+			}  else if (args.Key == 2) {
+
+				int mappedValue = (int)map (args.Value, Low, High, -255, 0);
+				if (mappedValue != SteeringPosition) {
+					OnSteeringChanged (this, new SoftControlEventArgs () {
+						Value = mappedValue,
+					});
+				}
+				SteeringPosition = mappedValue;
+			}
+
+			else if (args.Key == 0) {
 				int mappedValue = (int)map (args.Value, Low, High, 0, 255);
 				if (mappedValue != SteeringPosition) {
 					OnSteeringChanged (this, new SoftControlEventArgs () {
