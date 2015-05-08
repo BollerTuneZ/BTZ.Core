@@ -71,7 +71,7 @@ namespace JoystickApi
 						Value = mappedValue,
 					});
 				}
-				PowerPosition = mappedValue;
+				PowerPositionBackWards = mappedValue;
 			}
 
 			else if (args.Key == 0) {
