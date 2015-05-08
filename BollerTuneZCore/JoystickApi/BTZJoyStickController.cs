@@ -13,6 +13,7 @@ namespace JoystickApi
 		#region ButtonValues
 		static int SteeringPosition;
 		static int PowerPosition;
+		static int PowerPositionBackWards;
 		static bool TempomatState;
 		#endregion
 
@@ -64,8 +65,8 @@ namespace JoystickApi
 				PowerPosition = mappedValue;
 			}  else if (args.Key == 2) {
 
-				int mappedValue = (int)map (args.Value, Low, High, -255, 0);
-				if (mappedValue != PowerPosition) {
+				int mappedValue = -(int)map (args.Value, Low, High, 0, 255);
+				if (mappedValue != PowerPositionBackWards) {
 					OnPowerChanged (this, new SoftControlEventArgs () {
 						Value = mappedValue,
 					});
