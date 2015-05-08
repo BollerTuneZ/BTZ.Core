@@ -30,11 +30,10 @@ namespace BollerTuneZCore
 			s_log.Info ("BollerTuneZ OS 1.0.1");
 			Initialize ();
 
-			new Thread (() => {
 				while (true) {
 					var input = Console.ReadLine();
 				}
-			}).Start ();
+			
 		}
 
 		void Initialize()
@@ -43,6 +42,8 @@ namespace BollerTuneZCore
 				s_log.Error ("Could not Initialize Joystick");
 				return;
 			}
+			s_log.Error ("Initialized");
+
 			_joyStick.OnPowerChanged += OnPowerChanged;
 			_joyStick.OnSteeringChanged += OnSteeringPositionChanged;
 			_joyStick.OnSpecialChanged += OnSpecialButtonChanged;
@@ -53,6 +54,7 @@ namespace BollerTuneZCore
 		void OnSpecialButtonChanged (object sender, EventArgs e)
 		{
 			SpecialButtonEventArgs args = (SpecialButtonEventArgs)e;
+			s_log.Info (String.Format ("Button was clicked {0} : {1}", args.Key, args.Triggered));
 			if (args.Key == 8) {
 				if (args.Triggered) {
 					if ((DateTime.Now.Subtract (lastTimeSetupPressed)).Seconds < 1) {
