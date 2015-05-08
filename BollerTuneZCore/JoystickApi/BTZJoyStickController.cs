@@ -87,6 +87,7 @@ namespace JoystickApi
 
 		void ProcessSpecialButtons(JoyStickEventArgs args)
 		{
+			Console.WriteLine(String.Format("ButtonBTZ {0} : {1}",args.Key,args.Triggered));
 			if (args.Key == 9) {
 				if (args.Triggered != TempomatState) {
 					OnSpecialChanged (this, new SpecialButtonEventArgs () {

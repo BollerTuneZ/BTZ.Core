@@ -56,7 +56,6 @@ namespace JoystickApi
 					fs.Read(buff, 0, 8);
 					j.DetectChange(buff);
 
-					int top = 1;
 
 					// Prints Axis values
 					foreach (byte key in j.Axis.Keys)
