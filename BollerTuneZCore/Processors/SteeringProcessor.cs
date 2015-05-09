@@ -111,7 +111,7 @@ namespace BollerTuneZCore
 			ArduinoMessage message;
 			message = new ArduinoMessage ();
 			message.LengthByte = 0x03;
-			message.TypeByte = (byte)SteeringConfigCollection.InputType;
+			message.TypeByte = (byte)SteeringConfigs.Base;
 			message.Payload = new byte[]{ (byte)SteeringConfigs.InputType, (byte)SteeringBaseBytes.Write, Convert.ToByte ('R') };
 			SendMessage (message);
 			s_log.Info ("Set InputType to Remote");

@@ -41,7 +41,7 @@ namespace BollerTuneZCore
 			s_log.Error ("Initializing");
 			if (!_joyStick.Initialize()) {
 				s_log.Error ("Could not Initialize Joystick");
-				return;
+				//return;
 			}
 			s_log.Error ("Initialized");
 

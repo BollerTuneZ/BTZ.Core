@@ -8,7 +8,7 @@ namespace Testing
 	{
 		IUDPService _service;
 		IUDPClientService _clientService;
-		const string ArduinoHostName = "192.168.1.177";
+		const string ArduinoHostName = "192.168.2.177";
 		const int ArduinoPort = 8888;
 		private object thisLock = new object ();
 
