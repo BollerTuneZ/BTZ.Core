@@ -121,11 +121,11 @@ namespace BollerTuneZCore
 
 		void SendMessage(ArduinoMessage message)
 		{
-			lock (lockCommunication) {
+			
 				_clientService.SendMessage (ConnectionInfo.ArduinoHostNameSteering,
 					ConnectionInfo.ArduinoPortSteering,
 					message);
-			}
+			
 		}
 
 
