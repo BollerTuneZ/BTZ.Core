@@ -54,11 +54,11 @@ void EthernetSetup()
 {
     Serial.println("Initialisiere Ethernet Componenten");
     udpConnectionInfo = new UDPConnectionInfo();
-    udpConnectionInfo->Initialize(192,168,1,177,8888); //IP und Port änderung muss beim BTZ Core bekannt sein
+    udpConnectionInfo->Initialize(192,168,2,177,8888); //IP und Port änderung muss beim BTZ Core bekannt sein
     updService = new UdpService();    
     updService->Init(udpConnectionInfo);    
     messageProcessor = new MessageProcessor(updService);    
-    client = new UDPClient(192,168,2,101,9050); //Server Endpoint  
+    client = new UDPClient(192,168,2,100,9050); //Server Endpoint  
   /*  
   Jede Message enthaelt das Attribut 'isLegal' welches angibt ob die Message 
   den vorschriften entspricht oder nicht. Vorher pruefen sonst koennte es gewaltig knallen!
