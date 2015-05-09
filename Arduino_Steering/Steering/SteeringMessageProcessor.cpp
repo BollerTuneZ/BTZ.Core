@@ -12,8 +12,11 @@ void SteeringMessageProcessor::ProcessMessages()
 {
    incommingMessage = _messageProcessor->ReceiveMessage();  
     if(incommingMessage.isLegal == 0x01)
-    {               
-      Serial.println("GotMail");
+    {   
+          
+      Serial.print("GotMail with type =");
+      Serial.println(incommingMessage.Type);
+      
       if(incommingMessage.Type == _tCBase)
       {
         Serial.println("Controlling Message");

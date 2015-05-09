@@ -24,9 +24,9 @@ namespace BollerTuneZCore
 			IBTZJoyStickController _joyStick = TinyIoC.TinyIoCContainer.Current.Resolve<IBTZJoyStickController> ();*/
 			Main programm = TinyIoC.TinyIoCContainer.Current.Resolve<BollerTuneZCore.Main> ();
 			Console.WriteLine ("Going to run");
-			//programm.Run ();
-			CommunicationTest testing = new CommunicationTest();
-			testing.RunTests ();
+			programm.Run ();
+			//CommunicationTest testing = new CommunicationTest();
+			//testing.RunTests ();
 			Console.ReadKey ();
 			/*
 			JoyStickTesting testing = TinyIoC.TinyIoCContainer.Current.Resolve<JoyStickTesting> ();
