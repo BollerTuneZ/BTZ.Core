@@ -33,7 +33,7 @@ namespace Communication
 			_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte(dir),Convert.ToByte(value)};
 
 			var diff = DateTime.Now.Subtract (lastTimeChanged);
-			if (diff.Milliseconds > 50) {
+			if (diff.Milliseconds > 50 || value == 0) {
 				_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
 					, _engineSpeedMessage);
 				lastTimeChanged = DateTime.Now;
