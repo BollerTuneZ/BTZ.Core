@@ -15,12 +15,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoystickApi", "JoystickApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{9FB644CF-248A-4D80-A499-920548E3ABC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingUnit", "TestingUnit\TestingUnit.csproj", "{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}.Debug|x86.Build.0 = Debug|Any CPU
+		{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}.Release|x86.Build.0 = Release|Any CPU
 		{5A482D12-1CF1-4BC9-ADFE-8D63E1E69D99}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{5A482D12-1CF1-4BC9-ADFE-8D63E1E69D99}.Debug|x86.Build.0 = Debug|Any CPU
 		{5A482D12-1CF1-4BC9-ADFE-8D63E1E69D99}.Release|x86.ActiveCfg = Release|Any CPU

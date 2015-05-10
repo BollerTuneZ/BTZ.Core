@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2C3EC11A-5C9D-4C39-A18D-D1A4FA2E3589}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TestingUnit</RootNamespace>
+    <AssemblyName>TestingUnit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Test.cs" />
+    <Compile Include="ArduinoMessageTest.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BollerTuneZCore.csproj">
+      <Project>{E714B849-0984-42FC-977C-0B812DD2F71A}</Project>
+      <Name>BollerTuneZCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication\Communication.csproj">
+      <Project>{E8F26B21-5324-42FD-A4AC-6C183D590D8B}</Project>
+      <Name>Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Communication.Infrastructure\Communication.Infrastructure.csproj">
+      <Project>{5A482D12-1CF1-4BC9-ADFE-8D63E1E69D99}</Project>
+      <Name>Communication.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{941264CC-5E1C-4BA8-A441-CEF9B7159CAF}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JoystickApi\JoystickApi.csproj">
+      <Project>{A597448B-594B-4E9F-B07B-5C6E1ED8E7F7}</Project>
+      <Name>JoystickApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SerializationLib\SerializationLib.csproj">
+      <Project>{D20E1E74-D7DF-4D2B-A301-B49D0A85FBD0}</Project>
+      <Name>SerializationLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testing\Testing.csproj">
+      <Project>{9FB644CF-248A-4D80-A499-920548E3ABC3}</Project>
+      <Name>Testing</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
