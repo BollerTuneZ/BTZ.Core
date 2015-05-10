@@ -23,6 +23,7 @@ Encoder encoderMotor = Encoder(2,4);
 Encoder encoderSteering = Encoder(3,7);
 //TimedActions
 TimedAction _messageReceiverAction = TimedAction(100,ReceiveMessages);
+TimedAction _debugLogAction = TimedAction(100,DebugLog);
 /*Ethernet Controller*/
 UDPClient *client;
 MessageProcessor *messageProcessor;
@@ -31,6 +32,8 @@ UDPConnectionInfo *udpConnectionInfo;
 Message *incommingMessage;
 /*Message Processing*/
 SteeringMessageProcessor _steeringMessageProcessor;
+/*Calculating Time*/
+long lastTime = millis();
 /*Steering*/
 SteeringCalculator _steeringCalculator;
 void setup() {
@@ -43,6 +46,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
+ _debugLogAction.check();
  if(_steeringMessageProcessor.GetSetupState() != 'N')
  {
      SteeringSetup();
@@ -134,6 +138,13 @@ void ProcessSteering()
       SetSteeringSpeed();
       return;
     } 
+    
+    long current = millis();
+    if((current - lastTime) < 150)
+    {
+      return;
+    }
+    lastTime = current;
     //TODO Wert ob Remote oder nicht
     char *values = _steeringCalculator.CalculateSpeed(_steeringMessageProcessor.GetSteeringPosition(),
     _steeringMessageProcessor.GetCurrentPosition(),
@@ -145,7 +156,8 @@ void ProcessSteering()
     _steeringMessageProcessor.GetMaxPosition(),
     _steeringMessageProcessor.GetMinSpeed(),
     _steeringMessageProcessor.GetMaxSpeed());
-    
+    //delay(500);
+    Serial.println(values[0]);
     _steeringMessageProcessor.SetDirection(values[0]);
     _steeringMessageProcessor.SetMotorSpeed(values[1]);
     
@@ -155,7 +167,6 @@ void ProcessSteering()
 
 void SetSteeringSpeed()
 {
-  
   
   digitalWrite(_steeringBoard.PowerPin,_steeringMessageProcessor.GetMotorSpeed());
 }
@@ -168,10 +179,12 @@ void SetDirection()
   
   if(_steeringMessageProcessor.GetDirection() == 'L')
   {
+    Serial.println("Move Left");
       digitalWrite(_steeringBoard.DirectionLeftPin,h);
       digitalWrite(_steeringBoard.DirectionRightPin,l);
   }else if(_steeringMessageProcessor.GetDirection() == 'R')
   {
+    Serial.println("Move Right");
      digitalWrite(_steeringBoard.DirectionLeftPin,l);
      digitalWrite(_steeringBoard.DirectionRightPin,h);
   }else 
@@ -185,4 +198,14 @@ void ReceiveMessages()
 {
   //Kommunikation mit dem Core Server
   _steeringMessageProcessor.ProcessMessages();
+}
+
+void DebugLog()
+{
+  /*
+    Serial.print("MotorSpeed = ");
+    Serial.print(_steeringMessageProcessor.GetMotorSpeed());  
+    Serial.print("  Direction = ");
+    Serial.println(_steeringMessageProcessor.GetDirection());
+    */
 }

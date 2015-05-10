@@ -46,13 +46,13 @@ Message MessageProcessor::ReceiveMessage()
   //4 = endbyte
    rMessage->isLegal = 0;
    this->udpService->GetBytes();
-    
+    //Serial.println("StartParsing");
    if(udpService->packetBuffer[0] != startByte)
    {
       //Startbyte is not what we expected
      return erMessage; 
    }
-   Serial.println("Parsing");
+   //Serial.println("Parsing");
    //as we now know how long the dataArray should be
    //we can easily find out if the Endbyte is right
    
@@ -74,11 +74,13 @@ Message MessageProcessor::ReceiveMessage()
   for(int i=0;i < _length;i++)
   {
     tempMessage.Data[i] = udpService->packetBuffer[(i +3)];
+    /*
       Serial.print("Buffer:");
       Serial.print("  Raw:");
       Serial.print(tempMessage.Data[i]);  
       Serial.print("//unsigned char:");
       Serial.println((unsigned char)tempMessage.Data[i]);
+      */
   }  
     
   tempMessage.isLegal = 1;

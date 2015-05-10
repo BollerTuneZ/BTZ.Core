@@ -49,8 +49,10 @@ void SteeringMessageProcessor::ProcessControllMessage()
   
   if(controllingType == _tCTurn)
   {
-      Serial.println("Tunring");
-      _state->RemotePosition = incommingMessage.Data[1];
+      Serial.print("Tunring to:");
+      
+      _state->RemotePosition = (unsigned char)incommingMessage.Data[1];
+      Serial.println((unsigned char)_state->RemotePosition);
   }else 
   if(controllingType == _tCStartSetup)
   {
@@ -220,6 +222,9 @@ void SteeringMessageProcessor::ProcessStateMessage()
       }else if(incommingMessage.Data[1] == Write)
       {
         _state->Enabled = incommingMessage.Data[2];  
+        
+        Serial.print("Enabled is:");
+        Serial.println(_state->Enabled);
       }    
   }else
   if(stateType == _tSRunning)

@@ -8,7 +8,7 @@ class SteeringState
 {
   public:
    char _enterSetup = 'N';
-   char MotorSpeed;
+   char MotorSpeed = 0x00;
    char Running = 'N';
    char Enabled = 'N';
    

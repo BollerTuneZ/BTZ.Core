@@ -16,6 +16,7 @@ namespace BollerTuneZCore
 		DateTime lastTimeSetupPressed = DateTime.Now;
 		DateTime lastTimeEnabledPressed = DateTime.Now;
 		bool IsEnabled = false;
+		DateTime _lastTimePositionChanged = DateTime.Now;
 
 		public Main (ISteeringProcessor _steeringProcessor, ISteeringConfigMessageProcessor _steeringConfigProcessor, IBTZJoyStickController _joyStick)
 		{
@@ -95,8 +96,14 @@ namespace BollerTuneZCore
 		{
 			SoftControlEventArgs args = (SoftControlEventArgs)e;
 			if (IsEnabled) {
-				s_log.Info (String.Format ("Change position to {0}", args.Value));
-				_steeringProcessor.Steer (args.Value);
+				var diff = DateTime.Now.Subtract (_lastTimePositionChanged);
+				if (diff.Milliseconds > 150) {
+					s_log.Info (String.Format ("Change position to {0}", args.Value));
+					_steeringProcessor.Steer (args.Value);
+					_lastTimePositionChanged = DateTime.Now;
+				}
+
+
 			}
 		}
 
