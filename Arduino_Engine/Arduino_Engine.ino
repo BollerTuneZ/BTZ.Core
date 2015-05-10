@@ -101,5 +101,5 @@ void DebugLog()
   Serial.print("Direction =");
   Serial.print(_currentDirection);
   Serial.print(" MotorSpeed =");
-  Serial.println(_currentSpeed);
+  Serial.println((unsigned char)_currentSpeed);
 }

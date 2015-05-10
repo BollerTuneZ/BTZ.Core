@@ -9,7 +9,7 @@ namespace Communication
 		ArduinoMessage _engineSpeedMessage;
 
 		readonly IUDPClientService _client;
-
+		DateTime lastTimeChanged = DateTime.Now;
 		public EngineProcessor (IUDPClientService _client)
 		{
 			this._client = _client;
@@ -32,8 +32,14 @@ namespace Communication
 
 			_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte(dir),Convert.ToByte(value)};
 
-			_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
-				, _engineSpeedMessage);
+			var diff = DateTime.Now.Subtract (lastTimeChanged);
+			if (diff.Milliseconds > 50) {
+				_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
+					, _engineSpeedMessage);
+				lastTimeChanged = DateTime.Now;
+			}
+
+
 			Console.WriteLine (_engineSpeedMessage.ToString ());
 		}
 
