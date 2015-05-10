@@ -1,13 +1,17 @@
 ﻿<Properties StartupItem="BollerTuneZCore.csproj" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Communication\MessageProcessor\EngineProcessor.cs">
     <Files>
-      <File FileName="Communication.Infrastructure\MessageProcessor\ISteeringProcessor.cs" Line="16" Column="70" />
-      <File FileName="Processors\SteeringProcessor.cs" Line="97" Column="5" />
-      <File FileName="BootStrapper.cs" Line="5" Column="22" />
+      <File FileName="Communication.Infrastructure\MessageProcessor\ISteeringProcessor.cs" Line="16" Column="17" />
+      <File FileName="Processors\SteeringProcessor.cs" Line="71" Column="3" />
+      <File FileName="BootStrapper.cs" Line="29" Column="75" />
       <File FileName="Testing\Communication\CommunicationTest.cs" Line="36" Column="6" />
       <File FileName="Communication.Infrastructure\Enums\Steering\SteeringConfigs.cs" Line="24" Column="24" />
-      <File FileName="Communication.Infrastructure\Enums\Steering\SteeringControlling.cs" Line="7" Column="14" />
+      <File FileName="Communication.Infrastructure\Enums\Steering\SteeringControlling.cs" Line="14" Column="3" />
+      <File FileName="Main.cs" Line="115" Column="24" />
+      <File FileName="Communication\MessageProcessor\EngineProcessor.cs" Line="23" Column="42" />
+      <File FileName="Infrastructure\Config\Network\ConnectionInfo.cs" Line="11" Column="45" />
+      <File FileName="Communication.Infrastructure\Messages\ArduinoMessage.cs" Line="17" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
