@@ -13,18 +13,21 @@ namespace BollerTuneZCore
 		readonly ISteeringProcessor _steeringProcessor;
 		readonly ISteeringConfigMessageProcessor _steeringConfigProcessor;
 		readonly IBTZJoyStickController _joyStick;
+		readonly IEngineProcessor _engineProcessor;
 		DateTime lastTimeSetupPressed = DateTime.Now;
 		DateTime lastTimeEnabledPressed = DateTime.Now;
 		bool IsEnabled = false;
 		DateTime _lastTimePositionChanged = DateTime.Now;
 
-		public Main (ISteeringProcessor _steeringProcessor, ISteeringConfigMessageProcessor _steeringConfigProcessor, IBTZJoyStickController _joyStick)
+		public Main (ISteeringProcessor _steeringProcessor, ISteeringConfigMessageProcessor _steeringConfigProcessor, IBTZJoyStickController _joyStick, IEngineProcessor _engineProcessor)
 		{
 			this._steeringProcessor = _steeringProcessor;
 			_steeringProcessor.Initialize ();
 			this._steeringConfigProcessor = _steeringConfigProcessor;
 			this._joyStick = _joyStick;
+			this._engineProcessor = _engineProcessor;
 		}
+
 
 		public void Run()
 		{
@@ -102,14 +105,15 @@ namespace BollerTuneZCore
 					_steeringProcessor.Steer (args.Value);
 					_lastTimePositionChanged = DateTime.Now;
 				}
-
-
 			}
 		}
 
 		void OnPowerChanged (object sender, EventArgs e)
 		{
-			
+			SoftControlEventArgs args = (SoftControlEventArgs)e;
+			if (IsEnabled) {
+				_engineProcessor.Drive (args.Value);
+			}
 		}
 		#endregion
 	}

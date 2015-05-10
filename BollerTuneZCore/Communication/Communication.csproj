@@ -41,6 +41,7 @@
     <Compile Include="Services\UDPService.cs" />
     <Compile Include="MessageProcessor\MessagePacker.cs" />
     <Compile Include="MessageProcessor\SteeringConfigMessageProcessor.cs" />
+    <Compile Include="MessageProcessor\EngineProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
