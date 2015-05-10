@@ -49,22 +49,27 @@ void SteeringMessageProcessor::ProcessControllMessage()
   
   if(controllingType == _tCTurn)
   {
+      Serial.println("Tunring");
       _state->RemotePosition = incommingMessage.Data[1];
   }else 
   if(controllingType == _tCStartSetup)
   {
+    Serial.println("Setup");
       _state->_enterSetup = incommingMessage.Data[1];
   }else 
   if(controllingType == _tCSetZero)
   {
+    Serial.println("SetZero");
       _state->_enterSetup = incommingMessage.Data[1];
   }else 
   if(controllingType == _tCContinueSetup)
   {
+    Serial.println("Continue Setup");
       _state->_enterSetup = incommingMessage.Data[1];
   }else 
   if(controllingType == _tCSetMaximumAndExit)
   {
+    Serial.println("Maximum and Exit");
       _state->_enterSetup = incommingMessage.Data[1];
   }
 }

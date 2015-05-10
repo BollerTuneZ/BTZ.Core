@@ -4,7 +4,7 @@ namespace Communication.Infrastructure
 {
 	public enum SteeringState: byte
 	{
-		Base = 0x43,
+		Base = 0x53,
 		CurrentPosition = 0x50,
 		Enabled = 0x45,
 		Running = 0x52,
