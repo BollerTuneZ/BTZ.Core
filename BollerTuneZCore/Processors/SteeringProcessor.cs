@@ -100,8 +100,8 @@ namespace BollerTuneZCore
 			ArduinoMessage message;
 			message = new ArduinoMessage ();
 			message.LengthByte = 0x02;
-			message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
-			message.Payload = new byte[]{ (byte)Communication.Infrastructure.SteeringState.RemotePosition,Convert.ToByte(value) };
+			message.TypeByte = (byte)SteeringControlling.Base;
+			message.Payload = new byte[]{ (byte)SteeringControlling.Turn,Convert.ToByte(value) };
 			SendMessage (message);
 		}
 
@@ -125,9 +125,7 @@ namespace BollerTuneZCore
 				_clientService.SendMessage (ConnectionInfo.ArduinoHostNameSteering,
 					ConnectionInfo.ArduinoPortSteering,
 					message);
-			
 		}
-
 
 		//ArduinoMessage CreateControllingMessage(
 	}

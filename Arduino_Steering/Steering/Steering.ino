@@ -43,7 +43,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
- if(_steeringMessageProcessor.GetSetupSpeed() != 'N')
+ if(_steeringMessageProcessor.GetSetupState() != 'N')
  {
      SteeringSetup();
  }
@@ -70,8 +70,12 @@ void EthernetSetup()
 
 void SteeringSetup()
 {
+  Serial.print("SetUpState:");
+  Serial.println(_steeringMessageProcessor.GetSetupState());
+  
     if(_steeringMessageProcessor.GetSetupState() == 'L')
     {
+      
       if(_steeringMessageProcessor.GetInvertState() == 'X')
       {
         _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirRight());        
@@ -151,8 +155,7 @@ void ProcessSteering()
 
 void SetSteeringSpeed()
 {
-  Serial.print("MotorSpeed: ");
-  Serial.println(_steeringMessageProcessor.GetMotorSpeed());
+  
   
   digitalWrite(_steeringBoard.PowerPin,_steeringMessageProcessor.GetMotorSpeed());
 }
@@ -162,8 +165,6 @@ void SetDirection()
   int h = HIGH;
   int l = LOW;
   
-        Serial.print("Direction: ");
-      Serial.println(_steeringMessageProcessor.GetDirection());
   
   if(_steeringMessageProcessor.GetDirection() == 'L')
   {
