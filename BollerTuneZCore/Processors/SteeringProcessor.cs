@@ -74,18 +74,18 @@ namespace BollerTuneZCore
 			if (SetupLevel == 'L') {
 				ArduinoMessage message;
 				message = new ArduinoMessage ();
-				message.LengthByte = 0x03;
-				message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
-				message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed, (byte)SteeringBaseBytes.Write, Convert.ToByte ('C') };
+				message.LengthByte = 0x02;
+				message.TypeByte = (byte)SteeringControlling.Base;
+				message.Payload = new byte[]{ (byte)SteeringControlling.ContinueSetup,Convert.ToByte ('C') };
 				SendMessage (message);
 				SetupLevel = 'C';
 				s_log.Info (String.Format("Setup Level {0}",SetupLevel));
 			} else if (SetupLevel == 'C') {
 				ArduinoMessage message;
 				message = new ArduinoMessage ();
-				message.LengthByte = 0x03;
-				message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
-				message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed, (byte)SteeringBaseBytes.Write, Convert.ToByte ('F') };
+				message.LengthByte = 0x02;
+				message.TypeByte = (byte)SteeringControlling.Base;
+				message.Payload = new byte[]{ (byte)SteeringControlling.ContinueSetup,Convert.ToByte ('F') };
 				SendMessage (message);
 				SetupLevel = 'N';
 				s_log.Info ("Setup Fertig");
