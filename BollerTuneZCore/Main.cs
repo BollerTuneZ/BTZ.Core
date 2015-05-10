@@ -72,11 +72,17 @@ namespace BollerTuneZCore
 						} else {
 							IsEnabled = true;
 						}
-						s_log.Info (String.Format("Set Enabled to {0}",IsEnabled));
+						s_log.Info (String.Format ("Set Enabled to {0}", IsEnabled));
 						_steeringProcessor.SetEnabled (IsEnabled);
 					}
 					lastTimeEnabledPressed = DateTime.Now;	
 				}
+			}else if (args.Key == 1) {
+				if (args.Triggered) {
+					s_log.Info ("StartSetup");
+					_steeringProcessor.StartSetup ();
+				}
+			
 			} else if (args.Key == 2) {
 				if (args.Triggered) {
 					s_log.Info ("Changed SetupLevel");
