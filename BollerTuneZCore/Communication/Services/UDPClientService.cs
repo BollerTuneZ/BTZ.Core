@@ -16,6 +16,19 @@ namespace Communication
 
 		#region IUDPClientService implementation
 
+		public void SendMessageBytes (string host, int port, byte[] data)
+		{
+			IPEndPoint RemoteEndPoint= new IPEndPoint(
+				IPAddress.Parse(host), port);
+			Socket server = new Socket(AddressFamily.InterNetwork,
+				SocketType.Dgram, ProtocolType.Udp);
+			byte[] payload = data;
+			for (int i = 0; i < payload.Length; i++) {
+				Console.WriteLine (String.Format ("i:{0} ; {1} //{2}", i, Convert.ToChar (payload [i]),Convert.ToInt32(payload[i])));
+			}
+			server.SendTo(payload, payload.Length, SocketFlags.None, RemoteEndPoint);
+		}
+
 		public void SendMessage (string host, int port, ArduinoMessage message)
 		{
 			IPEndPoint RemoteEndPoint= new IPEndPoint(

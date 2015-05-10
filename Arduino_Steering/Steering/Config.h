@@ -9,13 +9,7 @@ class Config
      Config();
      ~Config();
      
-     /*Setter*/
-     void SetInputType(char t);
-     void SetMaximalSpeed(char s);
-     void SetMinimalSpeed(char s);
-     void SetMaximalPosition(int p);
-     void SetMaximalCenter(int p);
-     void SetInvert(char i);
+     char CommandChar = 'c';
          
      /*Identität des Arduinos (Wichtig für das MessageSystem*/
      char Identity = 'L';
@@ -33,7 +27,7 @@ class Config
      * Gibt an in welcher Geschwindigkeit sich der Motor beim 
      * Calibrieren bewegen soll
      */
-   char SetupSpeed = 5;   
+   int SetupSpeed = 5;   
    /*Steering invert*/
    int LeftOn = HIGH;
    int LeftOff = LOW;   
@@ -48,6 +42,12 @@ class Config
    *Gibt an ob die richtung gedreht werden soll
    *N = NoInvert; X = Invert
    */
-   char InvertDirection = 'N';         
+   char InvertDirection = 'N';      
+
+  //Typen
+      //General
+   char T_SetupStep = 'S';
+  char T_InputType = 'I';
+ char T_Steer = 'T'; 
 };
 #endif

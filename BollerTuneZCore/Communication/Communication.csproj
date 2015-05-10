@@ -42,6 +42,7 @@
     <Compile Include="MessageProcessor\MessagePacker.cs" />
     <Compile Include="MessageProcessor\SteeringConfigMessageProcessor.cs" />
     <Compile Include="MessageProcessor\EngineProcessor.cs" />
+    <Compile Include="MessageProcessor\SimpleSteeringProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

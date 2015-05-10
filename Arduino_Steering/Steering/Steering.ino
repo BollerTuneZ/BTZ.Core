@@ -2,7 +2,6 @@
 #include <SPI.h>       
 #include <Ethernet.h>
 #include <EthernetUdp.h>
-#include "Common.h"
 #include "SteeringBoard.h"
 #include "UDPConnectionInfo.h"
 #include "UdpService.h"
@@ -10,13 +9,9 @@
 #include "MessageProcessor.h"
 #include "Message.h"
 #include "SteeringState.h"
-#include "MessageGenerator.h"
 #include "Config.h"
-#include "SteeringCalculator.h"
-#include "SteeringMessageProcessor.h"
 
-SteeringBoard _steeringBoard;
-Common _common;
+
 #define ENCODER_OPTIMIZE_INTERRUPTS
 #include <Encoder.h>
 Encoder encoderMotor = Encoder(2,4);
@@ -29,13 +24,12 @@ UDPClient *client;
 MessageProcessor *messageProcessor;
 UdpService * updService;
 UDPConnectionInfo *udpConnectionInfo;
-Message *incommingMessage;
-/*Message Processing*/
-SteeringMessageProcessor _steeringMessageProcessor;
 /*Calculating Time*/
 long lastTime = millis();
 /*Steering*/
-SteeringCalculator _steeringCalculator;
+SteeringState _state;
+Config _config;
+SteeringBoard _steeringBoard;
 void setup() {
   Serial.begin(9600);
   pinMode(_steeringBoard.DirectionLeftPin,OUTPUT);
@@ -46,11 +40,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
- _debugLogAction.check();
- if(_steeringMessageProcessor.GetSetupState() != 'N')
- {
-     SteeringSetup();
- }
+ SteeringSetup();
  ProcessSteering();
 }
 
@@ -60,131 +50,67 @@ void EthernetSetup()
     udpConnectionInfo = new UDPConnectionInfo();
     udpConnectionInfo->Initialize(192,168,2,177,8888); //IP und Port änderung muss beim BTZ Core bekannt sein
     updService = new UdpService();    
-    updService->Init(udpConnectionInfo);    
-    messageProcessor = new MessageProcessor(updService);    
+    updService->Init(udpConnectionInfo);       
     client = new UDPClient(192,168,2,100,9050); //Server Endpoint  
-  /*  
-  Jede Message enthaelt das Attribut 'isLegal' welches angibt ob die Message 
-  den vorschriften entspricht oder nicht. Vorher pruefen sonst koennte es gewaltig knallen!
-  */
   Serial.println("Waiting for Commands...");
-  _steeringMessageProcessor.Initialize(messageProcessor,client);
   
 }
 
 void SteeringSetup()
 {
-  Serial.print("SetUpState:");
-  Serial.println(_steeringMessageProcessor.GetSetupState());
-  
-    if(_steeringMessageProcessor.GetSetupState() == 'L')
+    if(_state.SetupState == 'Y')
     {
-      
-      if(_steeringMessageProcessor.GetInvertState() == 'X')
-      {
-        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirRight());        
-      }else
-      {
-        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirLeft());
-      }
-      _steeringMessageProcessor.SetMotorSpeed(_steeringMessageProcessor.GetSetupSpeed());
-       SetDirection();
-       SetSteeringSpeed();
-    }else
-    if(_steeringMessageProcessor.GetSetupState() == 'C')
+        SetDirection(_config.ConstDirLeft);
+        SetSteeringSpeed(_config.SetupSpeed);
+    }else if(_state.SetupState == 'X')
     {
-      encoderMotor.write(0);  
-      _steeringMessageProcessor.SetSetupState('E');
-    }else
-    if(_steeringMessageProcessor.GetSetupState() == 'E')
+      encoderMotor.write(0);
+      SetDirection('N');
+      SetSteeringSpeed(0);
+    }else if(_state.SetupState == 'C')
     {
-      _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read()); 
-     
-      if(_steeringMessageProcessor.GetInvertState() == 'X')
-      {
-        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirLeft());        
-      }else
-      {
-        _steeringMessageProcessor.SetDirection(_steeringMessageProcessor.GetDirRight());
-      }
-      _steeringMessageProcessor.SetMotorSpeed(_steeringMessageProcessor.GetSetupSpeed());
-       SetDirection();
-       SetSteeringSpeed();
-      
-    }if(_steeringMessageProcessor.GetSetupState() == 'F')
+      SetDirection(_config.ConstDirRight);
+      SetSteeringSpeed(_config.SetupSpeed);
+      _state.RealPosition = encoderMotor.read();
+    }else if(_state.SetupState == 'S')
     {
-      int maxi = _steeringMessageProcessor.GetCurrentPosition();
-      _steeringMessageProcessor.SetMaxPosition(maxi);
-      _steeringMessageProcessor.SetCenterPosition((int)(maxi / 2));
-      _steeringMessageProcessor.SetSetupState('N');
+      SetDirection('N');
+      SetSteeringSpeed(0);
+      _config.MaximalPosition = encoderMotor.read();
+      _config.Center = (int)(_config.MaximalPosition /2 );
+      _state.SetupState = 'R';
     }
 }
 
 void ProcessSteering()
 {
-  if(_steeringMessageProcessor.IsEnabled() != 'Y')
+  if(_state.SetupState != 'R')
   {
     return;
   }
-    //Position von beiden Encodern abfragen
-     _steeringMessageProcessor.SetCurrentPosition((int)encoderMotor.read());  
-     _steeringMessageProcessor.SetCurrentSteeringPosition((int)encoderSteering.read());
-    
-    if(_steeringMessageProcessor.GetInputType() == 'N')
-    {
-      _steeringMessageProcessor.SetDirection('N');
-      _steeringMessageProcessor.SetMotorSpeed(0);
-      SetDirection();
-      SetSteeringSpeed();
-      return;
-    } 
-    
-    long current = millis();
-    if((current - lastTime) < 150)
-    {
-      return;
-    }
-    lastTime = current;
-    //TODO Wert ob Remote oder nicht
-    char *values = _steeringCalculator.CalculateSpeed(_steeringMessageProcessor.GetSteeringPosition(),
-    _steeringMessageProcessor.GetCurrentPosition(),
-    _steeringMessageProcessor.GetRemotePosition(),
-    _steeringMessageProcessor.GetInputType(),
-    _steeringMessageProcessor.GetDirLeft(),
-    _steeringMessageProcessor.GetDirRight(),
-    _steeringMessageProcessor.GetInvertState(),
-    _steeringMessageProcessor.GetMaxPosition(),
-    _steeringMessageProcessor.GetMinSpeed(),
-    _steeringMessageProcessor.GetMaxSpeed());
-    //delay(500);
-    Serial.println(values[0]);
-    _steeringMessageProcessor.SetDirection(values[0]);
-    _steeringMessageProcessor.SetMotorSpeed(values[1]);
-    
-    SetDirection();
-    SetSteeringSpeed();
-}
-
-void SetSteeringSpeed()
-{
+  _state.RealPosition = encoderMotor.read();
   
-  digitalWrite(_steeringBoard.PowerPin,_steeringMessageProcessor.GetMotorSpeed());
+  int motorSpeed = CalculateSpeed();
+  
+  SetDirection(_state.Direction);
+  SetSteeringSpeed(motorSpeed);
 }
 
-void SetDirection()
+void SetSteeringSpeed(int motorSpeed)
+{
+  analogWrite(_steeringBoard.PowerPin,motorSpeed);
+}
+
+void SetDirection(char sDirection)
 {
   int h = HIGH;
-  int l = LOW;
-  
-  
-  if(_steeringMessageProcessor.GetDirection() == 'L')
+  int l = LOW;   
+  if(sDirection == 'L')
   {
-    Serial.println("Move Left");
       digitalWrite(_steeringBoard.DirectionLeftPin,h);
       digitalWrite(_steeringBoard.DirectionRightPin,l);
-  }else if(_steeringMessageProcessor.GetDirection() == 'R')
+  }else if(sDirection == 'R')
   {
-    Serial.println("Move Right");
      digitalWrite(_steeringBoard.DirectionLeftPin,l);
      digitalWrite(_steeringBoard.DirectionRightPin,h);
   }else 
@@ -196,8 +122,54 @@ void SetDirection()
 
 void ReceiveMessages()
 {
-  //Kommunikation mit dem Core Server
-  _steeringMessageProcessor.ProcessMessages();
+  updService->GetBytes();
+    //Serial.println("StartParsing");
+   if(updService->packetBuffer[0] != _config.CommandChar)
+   {
+     return;
+   }
+   
+   if(updService->packetBuffer[1] == _config.T_SetupStep)
+   {
+       _state.SetupState = updService->packetBuffer[2];
+   }else if(updService->packetBuffer[1] == _config.T_InputType)
+   {
+     _config.InputType = updService->packetBuffer[2];
+   }else if(updService->packetBuffer[1] == _config.T_Steer)
+   {
+     _state.RemotePosition = (int)(unsigned char)updService->packetBuffer[2];
+   }
+}
+
+int CalculateSpeed()
+{
+  int steeringPosition = encoderSteering.read();
+  
+  if(_config.InputType == 'R')
+  {
+     steeringPosition = map(_state.RemotePosition,0,255,0,_config.MaximalPosition); 
+  }
+  
+  int diff = _state.RealPosition - steeringPosition;
+  
+  if(diff < 0)
+  {
+    _state.Direction = _config.ConstDirRight;
+  diff = diff *(-1);  
+  }else if( diff == 0)
+  {
+    _state.Direction = 'N';
+  }else 
+  {
+    _state.Direction = _config.ConstDirLeft;  
+  }
+  
+  if(diff < 50)
+  {
+    return 0;  
+  }
+  
+  return map(diff,0,_config.MaximalPosition,0,255);
 }
 
 void DebugLog()

@@ -8,6 +8,7 @@ namespace Communication.Infrastructure
 	public interface IUDPClientService
 	{
 		void SendMessage(string host,int port,ArduinoMessage message);
+		void SendMessageBytes(string host,int port,byte[] data);
 	}
 }
 
