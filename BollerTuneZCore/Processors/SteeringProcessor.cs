@@ -62,8 +62,8 @@ namespace BollerTuneZCore
 			ArduinoMessage message;
 			message = new ArduinoMessage ();
 			message.LengthByte = 0x03;
-			message.TypeByte = (byte)SteeringControlling.StartSetup;
-			message.Payload = new byte[]{ (byte)SteeringConfigs.SetupSpeed,(byte)SteeringBaseBytes.Write,Convert.ToByte('L') };
+			message.TypeByte = (byte)SteeringControlling.Base;
+			message.Payload = new byte[]{ (byte)SteeringControlling.StartSetup,Convert.ToByte('L') };
 			SendMessage (message);
 			SetupLevel = 'L';
 			s_log.Info (String.Format("Setup Level {0}",SetupLevel));
