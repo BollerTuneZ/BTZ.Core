@@ -40,7 +40,7 @@ namespace BollerTuneZCore
 		{
 			ArduinoMessage message;
 			message = new ArduinoMessage ();
-			message.LengthByte = 0x01;
+			message.LengthByte = 0x03;
 			message.TypeByte = (byte)Communication.Infrastructure.SteeringState.Base;
 			if (enabled) {
 				message.Payload = new byte[] {
