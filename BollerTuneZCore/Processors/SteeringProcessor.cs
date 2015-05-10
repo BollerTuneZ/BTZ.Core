@@ -89,6 +89,7 @@ namespace BollerTuneZCore
 				SendMessage (message);
 				SetupLevel = 'N';
 				s_log.Info ("Setup Fertig");
+				Calibrated = true;
 			}
 		}
 
