@@ -55,6 +55,7 @@ void ProcessMessages()
     {   
       if(incommingMessage.Type == 'D')
       {
+        Serial.println("OK");
          _currentDirection = incommingMessage.Data[0];
          _currentSpeed = (unsigned char)incommingMessage.Data[1];
       }
@@ -93,6 +94,10 @@ void SetDirection()
 
 void DebugLog()
 {
+  if(_currentDirection == 'N')
+  {
+    return;
+  }
   Serial.print("Direction =");
   Serial.print(_currentDirection);
   Serial.print(" MotorSpeed =");

@@ -15,7 +15,7 @@ namespace Communication
 			this._client = _client;
 			_engineSpeedMessage = new ArduinoMessage {
 				LengthByte = 0x02,
-				TypeByte = Convert.ToByte('D')
+				TypeByte = Convert.ToByte('D'),
 			};
 		}
 		
@@ -34,6 +34,7 @@ namespace Communication
 
 			_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
 				, _engineSpeedMessage);
+			Console.WriteLine (_engineSpeedMessage.ToString ());
 		}
 
 		#endregion
