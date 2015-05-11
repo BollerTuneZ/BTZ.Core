@@ -12,6 +12,7 @@ namespace Communication
 		IUDPClientService _clientService;
 		ILog log = LogManager.GetLogger(typeof(SimpleSteeringProcessor));
 		char Isenabled = 'N';
+		bool startSteering = false;
 		public SimpleSteeringProcessor (IUDPClientService _clientService)
 		{
 			this._clientService = _clientService;
@@ -22,9 +23,9 @@ namespace Communication
 
 		public void Steer (int value)
 		{
-			if (Isenabled == 'N') {
-				return;
+			if (!startSteering) {
 			
+				return;
 			}
 			if (value > 0 && value < 256) {
 				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
@@ -35,14 +36,7 @@ namespace Communication
 
 		public void SetEnabled (bool enabled)
 		{
-			if (Isenabled == 'R') {
-				Isenabled = 'N';
-			} else {
-				Isenabled = 'R';
-			}
-			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
-				new byte[]{ CommandByte, Convert.ToByte ('S'), Convert.ToByte (Isenabled) });
-			log.Info(String.Format("Enabled: {0}",Isenabled));
+			startSteering = true;
 		}
 
 		public void Initialize ()
