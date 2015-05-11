@@ -83,7 +83,7 @@ void SetDirection()
       if(_currentDirection == 'F')
         {
          digitalWrite(_board.DirectionBackPin,LOW);
-         digitalWrite(_board.DirectionForPin,HIGH);
+         digitalWrite(_board.DirectionForPin,LOW);
         }else if(_currentDirection == 'B')
         {
           digitalWrite(_board.DirectionBackPin,HIGH);

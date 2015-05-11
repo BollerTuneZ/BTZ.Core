@@ -14,8 +14,8 @@
 
 #define ENCODER_OPTIMIZE_INTERRUPTS
 #include <Encoder.h>
-Encoder encoderMotor = Encoder(2,4);
-Encoder encoderSteering = Encoder(3,7);
+Encoder encoderMotor = Encoder(3,7);
+Encoder encoderSteering = Encoder(2,4);
 //TimedActions
 TimedAction _messageReceiverAction = TimedAction(50,ReceiveMessages);
 TimedAction _debugLogAction = TimedAction(100,DebugLog);
@@ -41,7 +41,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
- _debugLogAction.check();
+ //_debugLogAction.check();
  SteeringSetup();
  ProcessSteering();
 }
@@ -62,25 +62,36 @@ void SteeringSetup()
 {
     if(_state.SetupState == 'Y')
     {
-        SetDirection(_config.ConstDirLeft);
-        SetSteeringSpeed(_config.SetupSpeed);
+        _state.Direction = _config.ConstDirLeft;
+        SetDirection(_state.Direction);
+        _state.MotorSpeed = 100;
+        SetSteeringSpeed(_state.MotorSpeed);
+         encoderMotor.write(0);
     }else if(_state.SetupState == 'X')
     {
-      encoderMotor.write(0);
-      SetDirection('N');
-      SetSteeringSpeed(0);
+     
+      _state.Direction = 'N';
+      _state.MotorSpeed = 0;
+      SetDirection(_state.Direction);
+      SetSteeringSpeed(_state.MotorSpeed);
     }else if(_state.SetupState == 'C')
     {
-      SetDirection(_config.ConstDirRight);
-      SetSteeringSpeed(_config.SetupSpeed);
+      _state.Direction = _config.ConstDirRight;
+      _state.MotorSpeed = 100;
+      SetDirection(_state.Direction);
+      SetSteeringSpeed(_state.MotorSpeed);
       _state.RealPosition = encoderMotor.read();
     }else if(_state.SetupState == 'S')
     {
-      SetDirection('N');
-      SetSteeringSpeed(0);
+      _state.Direction = 'N';
+      _state.MotorSpeed = 0;
+      SetDirection(_state.Direction);
+      SetSteeringSpeed(_state.MotorSpeed);
       _config.MaximalPosition = encoderMotor.read();
       _config.Center = (int)(_config.MaximalPosition /2 );
       _state.SetupState = 'R';
+      Serial.println(_config.MaximalPosition);
+      delay(2000);
     }
 }
 
@@ -93,12 +104,11 @@ void ProcessSteering()
   _state.RealPosition = encoderMotor.read();
   
   motorSpeed = CalculateSpeed();
-  
   SetDirection(_state.Direction);
   SetSteeringSpeed(motorSpeed);
 }
 
-void SetSteeringSpeed(int motorSpeed)
+void SetSteeringSpeed(char motorSpeed)
 {
   analogWrite(_steeringBoard.PowerPin,motorSpeed);
 }
@@ -130,7 +140,7 @@ void ReceiveMessages()
    {
      return;
    }
-   
+   Serial.println("Message received");
    if(updService->packetBuffer[1] == _config.T_SetupStep)
    {
        _state.SetupState = updService->packetBuffer[2];
@@ -139,20 +149,30 @@ void ReceiveMessages()
      _config.InputType = updService->packetBuffer[2];
    }else if(updService->packetBuffer[1] == _config.T_Steer)
    {
-     _state.RemotePosition = (int)(unsigned char)updService->packetBuffer[2];
-   }
+     _state.RemotePosition = (unsigned char)updService->packetBuffer[2];
+     Serial.print("RemotePosition:");
+     Serial.println(_state.RemotePosition);  
+ }
 }
 
-int CalculateSpeed()
+unsigned char CalculateSpeed()
 {
   int steeringPosition = encoderSteering.read();
-  
+  _state.RealPosition = encoderMotor.read();
+
   if(_config.InputType == 'R')
   {
+    
      steeringPosition = map(_state.RemotePosition,0,255,0,_config.MaximalPosition); 
+/*     Serial.print("CalculatedDiff:");
+     
+     Serial.println(steeringPosition);
+       Serial.print("motorPosition");
+  Serial.println(_state.RealPosition);
+     */
   }
   
-  int diff = _state.RealPosition - steeringPosition;
+ int diff = _state.RealPosition - steeringPosition;
   
   if(diff < 0)
   {
@@ -166,18 +186,24 @@ int CalculateSpeed()
     _state.Direction = _config.ConstDirLeft;  
   }
   
-  if(diff < 50)
-  {
-    return 0;  
-  }
+  unsigned char cSpeed = (unsigned char)map(diff,0,_config.MaximalPosition,40,255);
   
-  return map(diff,0,_config.MaximalPosition,0,255);
+  if(diff < 300)
+  {
+    _state.Direction = 'N';
+    return 0x00;  
+  }else
+  {
+    return cSpeed;
+  }
 }
 
 void DebugLog()
 {
+  if(_state.SetupState == 'N')
+  {return;}
     Serial.print("MotorSpeed = ");
-    Serial.print(motorSpeed);  
+    Serial.print(_state.MotorSpeed);  
     Serial.print("  Direction = ");
     Serial.println(_state.Direction);
    Serial.print("SetupState = ");
