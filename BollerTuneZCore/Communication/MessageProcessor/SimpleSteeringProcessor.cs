@@ -74,6 +74,8 @@ namespace Communication
 			} else if (SetupState == 'Y') {
 				SetupState = 'X';
 			} else if (SetupState == 'X') {
+				SetupState = 'C';
+			} else if (SetupState == 'C') {
 				SetupState = 'S';
 			}
 		}
