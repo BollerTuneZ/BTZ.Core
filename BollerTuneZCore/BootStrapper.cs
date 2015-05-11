@@ -24,7 +24,7 @@ namespace BollerTuneZCore
 			TinyIoCContainer.Current.Register<IBTZJoyStickController,BTZJoyStickController> ();
 			TinyIoCContainer.Current.Register<JoyStickTesting> ();
 			TinyIoCContainer.Current.Register<CommunicationTest> ();
-			TinyIoCContainer.Current.Register<ISteeringProcessor,SteeringProcessor> ().AsSingleton();
+			TinyIoCContainer.Current.Register<ISteeringProcessor,SimpleSteeringProcessor> ().AsSingleton();
 			TinyIoCContainer.Current.Register<ISteeringConfigMessageProcessor,SteeringConfigMessageProcessor> ().AsSingleton();
 			TinyIoCContainer.Current.Register<IEngineProcessor,EngineProcessor> ();
 			TinyIoCContainer.Current.Register<BollerTuneZCore.Main> ();

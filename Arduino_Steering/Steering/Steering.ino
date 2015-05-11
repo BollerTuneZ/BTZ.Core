@@ -17,7 +17,7 @@
 Encoder encoderMotor = Encoder(2,4);
 Encoder encoderSteering = Encoder(3,7);
 //TimedActions
-TimedAction _messageReceiverAction = TimedAction(100,ReceiveMessages);
+TimedAction _messageReceiverAction = TimedAction(50,ReceiveMessages);
 TimedAction _debugLogAction = TimedAction(100,DebugLog);
 /*Ethernet Controller*/
 UDPClient *client;
@@ -30,6 +30,7 @@ long lastTime = millis();
 SteeringState _state;
 Config _config;
 SteeringBoard _steeringBoard;
+int motorSpeed;
 void setup() {
   Serial.begin(9600);
   pinMode(_steeringBoard.DirectionLeftPin,OUTPUT);
@@ -40,6 +41,7 @@ void setup() {
 
 void loop() {
  _messageReceiverAction.check();
+ _debugLogAction.check();
  SteeringSetup();
  ProcessSteering();
 }
@@ -90,7 +92,7 @@ void ProcessSteering()
   }
   _state.RealPosition = encoderMotor.read();
   
-  int motorSpeed = CalculateSpeed();
+  motorSpeed = CalculateSpeed();
   
   SetDirection(_state.Direction);
   SetSteeringSpeed(motorSpeed);
@@ -174,10 +176,12 @@ int CalculateSpeed()
 
 void DebugLog()
 {
-  /*
     Serial.print("MotorSpeed = ");
-    Serial.print(_steeringMessageProcessor.GetMotorSpeed());  
+    Serial.print(motorSpeed);  
     Serial.print("  Direction = ");
-    Serial.println(_steeringMessageProcessor.GetDirection());
-    */
+    Serial.println(_state.Direction);
+   Serial.print("SetupState = ");
+    Serial.println(_state.SetupState);
+    Serial.print("MotorEncoder = ");
+    Serial.println(_state.RealPosition);
 }
