@@ -22,6 +22,10 @@ namespace Communication
 
 		public void Steer (int value)
 		{
+			if (Isenabled == 'N') {
+				return;
+			
+			}
 			if (value > 0 && value < 256) {
 				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
 					new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (value) });
