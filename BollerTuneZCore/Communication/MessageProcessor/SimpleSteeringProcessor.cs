@@ -62,6 +62,7 @@ namespace Communication
 
 		public void ChangeSetupLevel ()
 		{
+			RaiseSetup ();
 			if (SetupState == 'S') {
 				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
 					new byte[]{ CommandByte, Convert.ToByte ('S'), Convert.ToByte (SetupState) });
