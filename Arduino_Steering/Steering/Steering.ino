@@ -17,7 +17,7 @@
 Encoder encoderMotor = Encoder(3,7);
 Encoder encoderSteering = Encoder(2,4);
 //TimedActions
-TimedAction _messageReceiverAction = TimedAction(50,ReceiveMessages);
+TimedAction _messageReceiverAction = TimedAction(100,ReceiveMessages);
 TimedAction _debugLogAction = TimedAction(100,DebugLog);
 /*Ethernet Controller*/
 UDPClient *client;
@@ -64,7 +64,7 @@ void SteeringSetup()
     {
         _state.Direction = _config.ConstDirLeft;
         SetDirection(_state.Direction);
-        _state.MotorSpeed = 100;
+        _state.MotorSpeed = 200;
         SetSteeringSpeed(_state.MotorSpeed);
          encoderMotor.write(0);
     }else if(_state.SetupState == 'X')
@@ -77,7 +77,7 @@ void SteeringSetup()
     }else if(_state.SetupState == 'C')
     {
       _state.Direction = _config.ConstDirRight;
-      _state.MotorSpeed = 100;
+      _state.MotorSpeed = 200;
       SetDirection(_state.Direction);
       SetSteeringSpeed(_state.MotorSpeed);
       _state.RealPosition = encoderMotor.read();
@@ -140,7 +140,7 @@ void ReceiveMessages()
    {
      return;
    }
-   Serial.println("Message received");
+   
    if(updService->packetBuffer[1] == _config.T_SetupStep)
    {
        _state.SetupState = updService->packetBuffer[2];
@@ -186,7 +186,7 @@ unsigned char CalculateSpeed()
     _state.Direction = _config.ConstDirLeft;  
   }
   
-  unsigned char cSpeed = (unsigned char)map(diff,0,_config.MaximalPosition,40,255);
+  unsigned char cSpeed = (unsigned char)map(diff,0,_config.MaximalPosition,150,255);
   
   if(diff < 300)
   {
