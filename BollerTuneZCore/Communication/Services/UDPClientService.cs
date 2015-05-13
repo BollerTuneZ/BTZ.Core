@@ -23,9 +23,6 @@ namespace Communication
 			Socket server = new Socket(AddressFamily.InterNetwork,
 				SocketType.Dgram, ProtocolType.Udp);
 			byte[] payload = data;
-			for (int i = 0; i < payload.Length; i++) {
-				Console.WriteLine (String.Format ("i:{0} ; {1} //{2}", i, Convert.ToChar (payload [i]),Convert.ToInt32(payload[i])));
-			}
 			server.SendTo(payload, payload.Length, SocketFlags.None, RemoteEndPoint);
 		}
 

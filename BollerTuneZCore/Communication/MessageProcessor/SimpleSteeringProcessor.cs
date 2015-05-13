@@ -19,15 +19,9 @@ namespace Communication
 		public SimpleSteeringProcessor (IUDPClientService _clientService)
 		{
 			this._clientService = _clientService;
-			steeringTimer.Interval = 50;
-			steeringTimer.Elapsed += SteeringTimer_Elapsed;
 		}
 
-		void SteeringTimer_Elapsed (object sender, System.Timers.ElapsedEventArgs e)
-		{
-			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
-				new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (currentPosition) });
-		}
+
 		
 
 		#region ISteeringProcessor implementation
@@ -39,16 +33,19 @@ namespace Communication
 				return;
 			}
 			currentPosition = value;
+			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+				new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (currentPosition) });
 		}
 
 		public void SetEnabled (bool enabled)
 		{
 			startSteering = enabled;
 			if (startSteering == true) {
-				steeringTimer.Start ();
-			} else {
-				steeringTimer.Stop ();
-			}
+				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+					new byte[]{ CommandByte, Convert.ToByte ('S'), Convert.ToByte ('R') });
+				
+
+			} 
 		}
 
 		public void Initialize ()
