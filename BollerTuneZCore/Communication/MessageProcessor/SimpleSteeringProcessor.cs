@@ -28,6 +28,7 @@ namespace Communication
 
 		public void Steer (int value)
 		{
+			log.InfoFormat ("Steering {0}", value);
 			currentPosition = value;
 			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
 				new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (currentPosition) });
