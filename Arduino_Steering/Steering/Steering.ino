@@ -37,6 +37,7 @@ void setup() {
   pinMode(_steeringBoard.DirectionRightPin,OUTPUT);
   pinMode(_steeringBoard.PowerPin,OUTPUT);
   EthernetSetup();
+  encoderMotor.write(_config.Center);
 }
 
 void loop() {
