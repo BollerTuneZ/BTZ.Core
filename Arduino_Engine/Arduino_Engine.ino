@@ -17,7 +17,7 @@ Message incommingMessage;
 MessageProcessor *messageProcessor;
 UdpService * updService;
 UDPConnectionInfo *udpConnectionInfo;
-TimedAction messageReceiveAction = TimedAction(100,ProcessMessages);
+TimedAction messageReceiveAction = TimedAction(50,ProcessMessages);
 TimedAction debugLogAction = TimedAction(100,DebugLog);
 /*State*/
 char _currentDirection = 'N';
@@ -53,6 +53,7 @@ void ProcessMessages()
     incommingMessage = messageProcessor->ReceiveMessage();  
     if(incommingMessage.isLegal == 0x01)
     {   
+      Serial.println("Message Received");
       if(incommingMessage.Type == 'D')
       {
          _currentDirection = incommingMessage.Data[0];
@@ -62,6 +63,7 @@ void ProcessMessages()
 }
 void SetMotorSpeed()
 {
+
   analogWrite(_board.PowerPin,_currentSpeed);
 }
 void SetDirection()

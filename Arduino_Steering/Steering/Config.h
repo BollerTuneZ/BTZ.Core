@@ -21,8 +21,8 @@ class Config
      char MaximalSpeed = 125; //default 125
      char MinimalSpeed = 1; //default 1
      /*Encoder limits*/
-     int MaximalPosition; //Muss gesetzt sein     
-     int Center; //Gibt an wo sich die mitte befindet     
+     int MaximalPosition = 6740; //Muss gesetzt sein     
+     int Center = 3216; //Gibt an wo sich die mitte befindet     
      /*
      * Gibt an in welcher Geschwindigkeit sich der Motor beim 
      * Calibrieren bewegen soll

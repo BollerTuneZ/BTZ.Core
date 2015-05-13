@@ -61,7 +61,7 @@ void EthernetSetup()
 
 void ProcessSteering()
 {
-  if(_state.SetupState != 'R')
+  if(_config.InputType != 'R')
   {
     return;
   }
@@ -98,18 +98,20 @@ void SetDirection(char sDirection)
 
 void ReceiveMessages()
 {
+  
   updService->GetBytes();
     //Serial.println("StartParsing");
    if(updService->packetBuffer[0] != _config.CommandChar)
    {
      return;
    }
-   
    if(updService->packetBuffer[1] == _config.T_SetupStep)
    {
+     Serial.println("Running");
        _state.SetupState = updService->packetBuffer[2];
    }else if(updService->packetBuffer[1] == _config.T_InputType)
    {
+     Serial.println("Set InputType");
      _config.InputType = updService->packetBuffer[2];
    }else if(updService->packetBuffer[1] == _config.T_Steer)
    {
@@ -143,7 +145,7 @@ unsigned char CalculateSpeed()
     _state.Direction = _config.ConstDirLeft;  
   }
   
-  unsigned char cSpeed = (unsigned char)map(diff,0,_config.MaximalPosition,150,255);
+  unsigned char cSpeed = (unsigned char)map(diff,0,_config.MaximalPosition,91,255);
   
   if(diff < 300)
   {
