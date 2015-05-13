@@ -19,6 +19,7 @@ namespace Communication
 		public SimpleSteeringProcessor (IUDPClientService _clientService)
 		{
 			this._clientService = _clientService;
+			this._clientService.SetAddress (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering);
 		}
 
 
@@ -30,7 +31,7 @@ namespace Communication
 		{
 			log.InfoFormat ("Steering {0}", value);
 			currentPosition = value;
-			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+			_clientService.SendMessageBytes (
 				new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (currentPosition) });
 		}
 
@@ -38,7 +39,7 @@ namespace Communication
 		{
 			startSteering = enabled;
 			if (startSteering == true) {
-				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+				_clientService.SendMessageBytes (
 					new byte[]{ CommandByte, Convert.ToByte ('S'), Convert.ToByte ('R') });
 				
 
@@ -47,7 +48,7 @@ namespace Communication
 
 		public void Initialize ()
 		{
-			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+			_clientService.SendMessageBytes (
 				new byte[]{ CommandByte, Convert.ToByte ('I'), Convert.ToByte ('R') });
 			log.Info("Initialized Steering");
 					

@@ -10,28 +10,32 @@ namespace Communication
 	{
 		const byte StartByte = 0x01;
 		const byte EndByte = 0xDE;
+		string hostAddress = "";
+		int hostPort = 0;
+		private IPEndPoint RemoteEndPoint;
+		Socket server;
 		public UDPClientService ()
 		{
 		}
 
 		#region IUDPClientService implementation
 
-		public void SendMessageBytes (string host, int port, byte[] data)
+		public void SetAddress (string hostname, int port)
 		{
-			IPEndPoint RemoteEndPoint= new IPEndPoint(
-				IPAddress.Parse(host), port);
-			Socket server = new Socket(AddressFamily.InterNetwork,
+			RemoteEndPoint= new IPEndPoint(
+				IPAddress.Parse(hostname), port);
+			server = new Socket(AddressFamily.InterNetwork,
 				SocketType.Dgram, ProtocolType.Udp);
+		}
+
+		public void SendMessageBytes ( byte[] data)
+		{
 			byte[] payload = data;
 			server.SendTo(payload, payload.Length, SocketFlags.None, RemoteEndPoint);
 		}
 
-		public void SendMessage (string host, int port, ArduinoMessage message)
+		public void SendMessage (ArduinoMessage message)
 		{
-			IPEndPoint RemoteEndPoint= new IPEndPoint(
-				IPAddress.Parse(host), port);
-			Socket server = new Socket(AddressFamily.InterNetwork,
-				SocketType.Dgram, ProtocolType.Udp);
 			byte[] payload = MessageToByteArray (message);
 
 			server.SendTo(payload, payload.Length, SocketFlags.None, RemoteEndPoint);

@@ -15,6 +15,7 @@ namespace Communication
 		public EngineProcessor (IUDPClientService _client)
 		{
 			this._client = _client;
+			this._client.SetAddress (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine);
 			_engineSpeedMessage = new ArduinoMessage {
 				LengthByte = 0x02,
 				TypeByte = Convert.ToByte('D'),
@@ -26,8 +27,7 @@ namespace Communication
 
 		void OnEngineSpeedElapsed (object sender, ElapsedEventArgs e)
 		{
-			_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
-				, _engineSpeedMessage);
+			_client.SendMessage ( _engineSpeedMessage);
 		}
 		
 
@@ -40,8 +40,8 @@ namespace Communication
 			} else {
 				engineSpeedTimer.Stop ();
 				_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte('N'),Convert.ToByte(0)};
-				_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
-					, _engineSpeedMessage);
+				_client.SendMessage (
+					 _engineSpeedMessage);
 				
 			}
 		}

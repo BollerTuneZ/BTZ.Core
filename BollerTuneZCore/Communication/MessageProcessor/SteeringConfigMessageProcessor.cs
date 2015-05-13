@@ -67,7 +67,7 @@ namespace Communication
 					break;
 				}
 				if (message != null) {
-					_client.SendMessage (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering, message);
+					_client.SendMessage ( message);
 					Thread.Sleep (200);
 				}
 			}
@@ -81,7 +81,7 @@ namespace Communication
 					continue;
 				}
 				var message = CreateReadMessage (config);
-				_client.SendMessage (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering, message);
+				_client.SendMessage ( message);
 				Thread.Sleep (200);
 			}
 		}

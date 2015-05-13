@@ -18,7 +18,7 @@ namespace BollerTuneZCore
 		{
 			//TinyIoCContainer.Current.Register<INetworkConfig,NetworkConfig> ();
 			TinyIoCContainer.Current.Register<IMessagePacker,MessagePacker> ();
-			TinyIoCContainer.Current.Register<IUDPClientService,UDPClientService> ();
+			TinyIoCContainer.Current.Register<IUDPClientService,UDPClientService> ().AsMultiInstance();
 			TinyIoCContainer.Current.Register<IUDPService,UDPService> ();
 			TinyIoCContainer.Current.Register<IJoyStickHandler,JoyStickHandler> ();
 			TinyIoCContainer.Current.Register<IBTZJoyStickController,BTZJoyStickController> ();

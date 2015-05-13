@@ -123,8 +123,7 @@ namespace BollerTuneZCore
 		void SendMessage(ArduinoMessage message)
 		{
 			
-				_clientService.SendMessage (ConnectionInfo.ArduinoHostNameSteering,
-					ConnectionInfo.ArduinoPortSteering,
+				_clientService.SendMessage (
 					message);
 		}
 

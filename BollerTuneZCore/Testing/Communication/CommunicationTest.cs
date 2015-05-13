@@ -38,7 +38,7 @@ namespace Testing
 						TypeByte = Convert.ToByte ('F'),
 						Payload = new byte[]{ Convert.ToByte ('I'), Convert.ToByte ('R') }
 					};
-					_clientService.SendMessage (ArduinoHostName, ArduinoPort, messageRead);
+					_clientService.SendMessage ( messageRead);
 				}
 			
 				Thread.Sleep (1000);
@@ -48,7 +48,7 @@ namespace Testing
 						TypeByte = Convert.ToByte ('F'),
 						Payload = new byte[]{ Convert.ToByte ('I'), Convert.ToByte ('W'), Convert.ToByte ('Y') }
 					};
-					_clientService.SendMessage (ArduinoHostName, ArduinoPort, messageSet);
+					_clientService.SendMessage ( messageSet);
 				}
 
 			}

@@ -24,7 +24,7 @@ namespace BollerTuneZCore
 			message.LengthByte = 0x01;
 			message.TypeByte = 0x02;
 			message.Payload = new byte[]{0x1F};
-			_udpClientService.SendMessage (host, port, message);
+			_udpClientService.SendMessage ( message);
 		}
 	}
 }
