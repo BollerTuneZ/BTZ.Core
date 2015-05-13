@@ -27,14 +27,10 @@ namespace BollerTuneZCore
 			this._steeringConfigProcessor = _steeringConfigProcessor;
 			this._joyStick = _joyStick;
 			this._engineProcessor = _engineProcessor;
-			timer.Elapsed += SteeringTimerElapsed;
-			timer.Start ();
+
 		}
 
-		void SteeringTimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
-		{
-			_steeringProcessor.Steer (_currentSteering);
-		}
+
 
 
 		public void Run()
