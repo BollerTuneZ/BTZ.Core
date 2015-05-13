@@ -98,6 +98,7 @@ namespace BollerTuneZCore
 		{
 			SoftControlEventArgs args = (SoftControlEventArgs)e;
 			_currentSteering = args.Value;
+			_steeringProcessor.Steer (args.Value);
 		}
 
 		void OnPowerChanged (object sender, EventArgs e)
