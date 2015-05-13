@@ -17,7 +17,7 @@
 Encoder encoderMotor = Encoder(3,7);
 Encoder encoderSteering = Encoder(2,4);
 //TimedActions
-TimedAction _messageReceiverAction = TimedAction(100,ReceiveMessages);
+TimedAction _messageReceiverAction = TimedAction(50,ReceiveMessages);
 TimedAction _debugLogAction = TimedAction(100,DebugLog);
 /*Ethernet Controller*/
 UDPClient *client;
@@ -42,7 +42,6 @@ void setup() {
 void loop() {
  _messageReceiverAction.check();
  //_debugLogAction.check();
- SteeringSetup();
  ProcessSteering();
 }
 
@@ -58,42 +57,6 @@ void EthernetSetup()
   
 }
 
-void SteeringSetup()
-{
-    if(_state.SetupState == 'Y')
-    {
-        _state.Direction = _config.ConstDirLeft;
-        SetDirection(_state.Direction);
-        _state.MotorSpeed = 200;
-        SetSteeringSpeed(_state.MotorSpeed);
-         encoderMotor.write(0);
-    }else if(_state.SetupState == 'X')
-    {
-     
-      _state.Direction = 'N';
-      _state.MotorSpeed = 0;
-      SetDirection(_state.Direction);
-      SetSteeringSpeed(_state.MotorSpeed);
-    }else if(_state.SetupState == 'C')
-    {
-      _state.Direction = _config.ConstDirRight;
-      _state.MotorSpeed = 200;
-      SetDirection(_state.Direction);
-      SetSteeringSpeed(_state.MotorSpeed);
-      _state.RealPosition = encoderMotor.read();
-    }else if(_state.SetupState == 'S')
-    {
-      _state.Direction = 'N';
-      _state.MotorSpeed = 0;
-      SetDirection(_state.Direction);
-      SetSteeringSpeed(_state.MotorSpeed);
-      _config.MaximalPosition = encoderMotor.read();
-      _config.Center = (int)(_config.MaximalPosition /2 );
-      _state.SetupState = 'R';
-      Serial.println(_config.MaximalPosition);
-      delay(2000);
-    }
-}
 
 void ProcessSteering()
 {
@@ -150,8 +113,7 @@ void ReceiveMessages()
    }else if(updService->packetBuffer[1] == _config.T_Steer)
    {
      _state.RemotePosition = (unsigned char)updService->packetBuffer[2];
-     Serial.print("RemotePosition:");
-     Serial.println(_state.RemotePosition);  
+      
  }
 }
 
@@ -164,12 +126,6 @@ unsigned char CalculateSpeed()
   {
     
      steeringPosition = map(_state.RemotePosition,0,255,0,_config.MaximalPosition); 
-/*     Serial.print("CalculatedDiff:");
-     
-     Serial.println(steeringPosition);
-       Serial.print("motorPosition");
-  Serial.println(_state.RealPosition);
-     */
   }
   
  int diff = _state.RealPosition - steeringPosition;

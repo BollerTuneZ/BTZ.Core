@@ -34,7 +34,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   messageReceiveAction.check();
-  debugLogAction.check();
+  //debugLogAction.check();
   SetDirection();
   SetMotorSpeed();
 }
@@ -55,7 +55,6 @@ void ProcessMessages()
     {   
       if(incommingMessage.Type == 'D')
       {
-        Serial.println("OK");
          _currentDirection = incommingMessage.Data[0];
          _currentSpeed = (unsigned char)incommingMessage.Data[1];
       }

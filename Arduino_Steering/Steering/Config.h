@@ -21,7 +21,7 @@ class Config
      char MaximalSpeed = 125; //default 125
      char MinimalSpeed = 1; //default 1
      /*Encoder limits*/
-     int MaximalPosition;     
+     int MaximalPosition; //Muss gesetzt sein     
      int Center; //Gibt an wo sich die mitte befindet     
      /*
      * Gibt an in welcher Geschwindigkeit sich der Motor beim 
