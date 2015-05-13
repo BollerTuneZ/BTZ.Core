@@ -33,6 +33,19 @@ namespace Communication
 
 		#region IEngineProcessor implementation
 
+		public void SetEnabled (bool enabled)
+		{
+			if (enabled) {
+				engineSpeedTimer.Start ();
+			} else {
+				engineSpeedTimer.Stop ();
+				_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte('N'),Convert.ToByte(0)};
+				_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
+					, _engineSpeedMessage);
+				
+			}
+		}
+
 		public void Drive (int value)
 		{
 			char dir = 'F';
@@ -40,9 +53,7 @@ namespace Communication
 				dir = 'B';
 				value = value * (-1);
 			}
-
 			_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte(dir),Convert.ToByte(value)};
-
 		}
 
 		#endregion

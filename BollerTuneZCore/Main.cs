@@ -39,7 +39,8 @@ namespace BollerTuneZCore
 
 		public void Run()
 		{
-			s_log.Info ("BollerTuneZ OS 1.0.1");
+			Console.WriteLine ("BollerTuneZ OS 1.2.0 Simple Build");
+			Thread.Sleep (2000);
 			Initialize ();
 
 				while (true) {
@@ -86,19 +87,9 @@ namespace BollerTuneZCore
 						}
 						s_log.Info (String.Format ("Set Enabled to {0}", IsEnabled));
 						_steeringProcessor.SetEnabled (IsEnabled);
+						_engineProcessor.SetEnabled (IsEnabled);
 					}
 					lastTimeEnabledPressed = DateTime.Now;	
-				}
-			}else if (args.Key == 1) {
-				if (args.Triggered) {
-					s_log.Info ("StartSetup");
-					_steeringProcessor.StartSetup ();
-				}
-			
-			} else if (args.Key == 2) {
-				if (args.Triggered) {
-					s_log.Info ("Changed SetupLevel");
-					_steeringProcessor.ChangeSetupLevel ();
 				}
 			}
 		}

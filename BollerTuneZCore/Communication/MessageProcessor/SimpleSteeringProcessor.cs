@@ -43,7 +43,12 @@ namespace Communication
 
 		public void SetEnabled (bool enabled)
 		{
-			startSteering = true;
+			startSteering = enabled;
+			if (startSteering == true) {
+				steeringTimer.Start ();
+			} else {
+				steeringTimer.Stop ();
+			}
 		}
 
 		public void Initialize ()
@@ -60,15 +65,10 @@ namespace Communication
 				SetupState = 'N';
 			}
 		}
-
+		[Obsolete]
 		public void ChangeSetupLevel ()
 		{
-			RaiseSetup ();
-
-				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
-					new byte[]{ CommandByte, Convert.ToByte ('S'), Convert.ToByte (SetupState) });
 			
-			log.Info(String.Format("Change SetupState to: {0}",SetupState));
 
 		}
 
