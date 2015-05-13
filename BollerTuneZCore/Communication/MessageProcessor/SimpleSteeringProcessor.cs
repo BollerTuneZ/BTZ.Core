@@ -13,9 +13,20 @@ namespace Communication
 		ILog log = LogManager.GetLogger(typeof(SimpleSteeringProcessor));
 		char Isenabled = 'N';
 		bool startSteering = false;
+		int currentPosition = 0;
+		System.Timers.Timer steeringTimer = new System.Timers.Timer ();
+
 		public SimpleSteeringProcessor (IUDPClientService _clientService)
 		{
 			this._clientService = _clientService;
+			steeringTimer.Interval = 50;
+			steeringTimer.Elapsed += SteeringTimer_Elapsed;
+		}
+
+		void SteeringTimer_Elapsed (object sender, System.Timers.ElapsedEventArgs e)
+		{
+			_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
+				new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (currentPosition) });
 		}
 		
 
@@ -27,11 +38,7 @@ namespace Communication
 			
 				return;
 			}
-			if (value > 0 && value < 256) {
-				_clientService.SendMessageBytes (ConnectionInfo.ArduinoHostNameSteering, ConnectionInfo.ArduinoPortSteering,
-					new byte[]{ CommandByte, Convert.ToByte ('T'), Convert.ToByte (value) });
-			}
-			log.Info(String.Format("Position: {0}",value));
+			currentPosition = value;
 		}
 
 		public void SetEnabled (bool enabled)

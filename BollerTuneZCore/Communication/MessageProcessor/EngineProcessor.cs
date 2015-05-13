@@ -1,15 +1,17 @@
 ﻿using System;
 using Communication.Infrastructure;
 using Infrastructure;
-
+using System.Timers;
 namespace Communication
 {
 	public class EngineProcessor : IEngineProcessor
 	{
 		ArduinoMessage _engineSpeedMessage;
-
+		System.Timers.Timer engineSpeedTimer = new Timer();
 		readonly IUDPClientService _client;
 		DateTime lastTimeChanged = DateTime.Now;
+		int EngineSpeed = 0;
+
 		public EngineProcessor (IUDPClientService _client)
 		{
 			this._client = _client;
@@ -17,6 +19,15 @@ namespace Communication
 				LengthByte = 0x02,
 				TypeByte = Convert.ToByte('D'),
 			};
+			engineSpeedTimer.Interval = 50;
+			engineSpeedTimer.Elapsed += OnEngineSpeedElapsed;
+			engineSpeedTimer.Start ();
+		}
+
+		void OnEngineSpeedElapsed (object sender, ElapsedEventArgs e)
+		{
+			_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
+				, _engineSpeedMessage);
 		}
 		
 
@@ -32,15 +43,6 @@ namespace Communication
 
 			_engineSpeedMessage.Payload = new byte[]{ Convert.ToByte(dir),Convert.ToByte(value)};
 
-			var diff = DateTime.Now.Subtract (lastTimeChanged);
-			if (diff.Milliseconds > 50 || value == 0) {
-				_client.SendMessage (ConnectionInfo.ArduinoHostNameEngine, ConnectionInfo.ArduinoPortEngine
-					, _engineSpeedMessage);
-				lastTimeChanged = DateTime.Now;
-			}
-
-
-			Console.WriteLine (_engineSpeedMessage.ToString ());
 		}
 
 		#endregion
